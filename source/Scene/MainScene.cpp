@@ -14,17 +14,30 @@ MainScene::MainScene(const InitData& init)
 
 void MainScene::update()
 {
-	if (DragDrop::HasNewFilePaths())
+	//if (DragDrop::HasNewFilePaths())
+	//{
+	//	for (const auto& dropped : DragDrop::GetDroppedFilePaths())
+	//	{
+	//		if (dropped.path.includes(U".ics"))
+	//		{
+	//			m_inputFilePath = dropped.path;
+	//			m_icalendar.load(m_inputFilePath.value());
+	//			m_csv = convertICalToCSV(m_icalendar);
+	//			m_spreadSheetGUI.setValues(convertCSVToGrid(m_csv));
+	//		}
+	//	}
+	//}
+
+	if (m_inputFilePath.has_value())
 	{
-		for (const auto& dropped : DragDrop::GetDroppedFilePaths())
+		if (m_inputFilePath.value().includes(U".ics")
+		 || m_inputFilePath.value().includes(U".ical")
+		 || m_inputFilePath.value().includes(U".icalendar"))
 		{
-			if (dropped.path.includes(U".ics"))
-			{
-				m_inputFilePath = dropped.path;
-				m_icalendar.load(m_inputFilePath.value());
-				m_csv = convertICalToCSV(m_icalendar);
-				m_spreadSheetGUI.setValues(convertCSVToGrid(m_csv));
-			}
+			m_icalendar.load(m_inputFilePath.value());
+			m_csv = convertICalToCSV(m_icalendar);
+			m_spreadSheetGUI.setValues(convertCSVToGrid(m_csv));
+			m_inputFilePath.reset();
 		}
 	}
 
