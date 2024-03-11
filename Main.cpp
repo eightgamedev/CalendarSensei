@@ -3,7 +3,7 @@
 # include "Scene/Common.hpp"
 # include "Scene/TestScene.hpp"
 # include "Scene/SyukujitsuCSVToICal.hpp"
-# include "Scene/ICalToCSV.hpp"
+# include "Scene/MainScene.hpp"
 # include "Scene/CSVToICal.hpp"
 
 void Main()
@@ -19,10 +19,10 @@ void Main()
 	App manager;
 	manager.add<TestScene>(State::TestScene)
 		.add<SyukujitsuCSVToICal>(State::SyukujitsuCSVToICal)
-		.add<ICalToCSV>(State::ICalToCSV)
+		.add<MainScene>(State::MainScene)
 		.add<CSVToICal>(State::CSVToICal);
 
-	manager.init(State::TestScene);
+	manager.init(State::MainScene);
 
 	while (System::Update())
 	{

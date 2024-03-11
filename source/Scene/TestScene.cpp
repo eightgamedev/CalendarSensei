@@ -20,7 +20,7 @@ void TestScene::update()
 	}
 	else if (ICalToCSVButton.isPushed())
 	{
-		changeScene(State::ICalToCSV);
+		changeScene(State::MainScene);
 	}
 	else if (SyukujitsuCSVToICalButton.isPushed())
 	{

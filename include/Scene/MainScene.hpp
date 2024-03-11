@@ -6,10 +6,10 @@
 # include "s3dex/CSVEX.hpp"
 # include "SimpleGridViewer/SpreadSheet.hpp"
 
-class ICalToCSV : public App::Scene
+class MainScene : public App::Scene
 {
 public:
-	ICalToCSV(const InitData& init);
+	MainScene(const InitData& init);
 	void update() override;
 	void draw() const override;
 private:

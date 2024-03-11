@@ -1,6 +1,6 @@
-﻿# include "Scene/ICalToCSV.hpp"
+﻿# include "Scene/MainScene.hpp"
 
-ICalToCSV::ICalToCSV(const InitData& init)
+MainScene::MainScene(const InitData& init)
 	: IScene(init)
 {
 	// 背景の色を設定する | Set the background color
@@ -12,7 +12,7 @@ ICalToCSV::ICalToCSV(const InitData& init)
 	m_spreadSheetGUI.setTextFont(Font(10));
 }
 
-void ICalToCSV::update()
+void MainScene::update()
 {
 	if (DragDrop::HasNewFilePaths())
 	{
@@ -49,7 +49,7 @@ void ICalToCSV::update()
 	m_saveButton.update();
 }
 
-void ICalToCSV::draw() const
+void MainScene::draw() const
 {
 	m_backToMenuButton.draw();
 	m_charsetPulldown.draw();
@@ -57,7 +57,7 @@ void ICalToCSV::draw() const
 	m_spreadSheetGUI.draw();
 }
 
-CSV ICalToCSV::convertICalToCSV(const icalendar::ICalendar& icalendar) const
+CSV MainScene::convertICalToCSV(const icalendar::ICalendar& icalendar) const
 {
 	CSV csv;
 	csv.writeRow(
@@ -95,7 +95,7 @@ CSV ICalToCSV::convertICalToCSV(const icalendar::ICalendar& icalendar) const
 	return csv;
 }
 
-Grid<String> ICalToCSV::convertCSVToGrid(const CSV& csv) const
+Grid<String> MainScene::convertCSVToGrid(const CSV& csv) const
 {
 	Grid<String> grid{ csv.columns(0), csv.rows() };
 	for (size_t row = 0; row < csv.rows(); ++row)

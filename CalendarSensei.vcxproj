@@ -140,7 +140,7 @@
     <ClCompile Include="source\s3dex\icalendar\Time.cpp" />
     <ClCompile Include="source\SasaGUI\SasaGUI.cpp" />
     <ClCompile Include="source\Scene\CSVToICal.cpp" />
-    <ClCompile Include="source\Scene\ICalToCSV.cpp" />
+    <ClCompile Include="source\Scene\MainScene.cpp" />
     <ClCompile Include="source\Scene\SyukujitsuCSVToICal.cpp" />
     <ClCompile Include="source\Scene\TestScene.cpp" />
     <ClCompile Include="source\SimpleGridViewer\SpreadSheet.cpp" />
@@ -364,7 +364,7 @@
     <ClInclude Include="include\SasaGUI\SasaGUI.hpp" />
     <ClInclude Include="include\Scene\Common.hpp" />
     <ClInclude Include="include\Scene\CSVToICal.hpp" />
-    <ClInclude Include="include\Scene\ICalToCSV.hpp" />
+    <ClInclude Include="include\Scene\MainScene.hpp" />
     <ClInclude Include="include\Scene\SyukujitsuCSVToICal.hpp" />
     <ClInclude Include="include\Scene\TestScene.hpp" />
     <ClInclude Include="include\SimpleGridViewer\SpreadSheet.hpp" />

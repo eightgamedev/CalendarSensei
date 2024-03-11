@@ -6,7 +6,7 @@ enum class State
 {
 	TestScene,
 	CSVToICal,
-	ICalToCSV,
+	MainScene,
 	SyukujitsuCSVToICal,
 };
 
