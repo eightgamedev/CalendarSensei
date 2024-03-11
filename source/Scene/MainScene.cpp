@@ -28,44 +28,14 @@ void MainScene::update()
 		}
 	}
 
-
-	if (const auto item = m_menuBar.update())
-	{
-		// 「インポート」が押されたら
-		if (item == MenuBarItemIndex{ 0, 1 })
-		{
-
-		}
-
-		// 「エクスポート」が押されたら
-		if (item == MenuBarItemIndex{ 0, 2 })
-		{
-			const auto savePath = Dialog::SaveFile({ FileFilter::CSV() });
-			if (savePath.has_value())
-			{
-				const String charset = m_charsetPulldown.getSelectedItem();
-				s3dex::CSVEX::save(m_csv, savePath.value(), charset);
-			}
-		}
-
-		// 「ライセンス」が押されたら
-		if (item == MenuBarItemIndex{ 1, 2 })
-		{
-			LicenseManager::ShowInBrowser();
-		}
-	}
-
 	{
 		const Transformer2D t(Mat3x2::Scale(0.85).translated(0, 400), TransformCursor::Yes);
 		m_spreadSheetGUI.update();
 	}
-	m_charsetPulldown.update();
-	m_menuBar.update();
 }
 
 void MainScene::draw() const
 {
-	m_charsetPulldown.draw();
 	{
 		const Transformer2D t(Mat3x2::Scale(0.85).translated(0, 400), TransformCursor::Yes);
 		m_spreadSheetGUI.draw();
@@ -76,8 +46,116 @@ void MainScene::draw() const
 		drawCalendarProperty(m_icalendar);
 	}
 
-	m_menuBar.draw();
+	drawToolWindow();
+	drawImportICalWindow();
+	drawExportCSVWindow();
+}
 
+void MainScene::drawToolWindow() const
+{
+	if (m_openingWindow != OpeningWindow::None)
+	{
+		return;
+	}
+
+	gui.frameBegin();
+	gui.windowBegin(U"", SasaGUI::WindowFlag::NoMove | SasaGUI::WindowFlag::NoTitlebar);
+	{
+		gui.setWindowSize({ 600, 250 });
+		switch (gui.tab(U"ToolMenu", { U"インポート", U"エクスポート" }))
+		{
+		case 0:
+			if (gui.button(U".ics"))
+			{
+				m_openingWindow = OpeningWindow::ImportICal;
+			}
+			gui.button(U".csv");
+			gui.button(U".xlsx");
+			gui.button(U"syukujitsu.csv(shukujitsu.csv)");
+			break;
+		case 1:
+			gui.button(U".ics");
+			if (gui.button(U".csv"))
+			{
+				m_openingWindow = OpeningWindow::ExportCSV;
+			}
+			gui.button(U".xlsx");
+			break;
+		}
+	}
+	gui.windowEnd();
+	gui.frameEnd();
+}
+
+void MainScene::drawImportICalWindow() const
+{
+	if (m_openingWindow != OpeningWindow::ImportICal)
+	{
+		return;
+	}
+
+	gui.frameBegin();
+	gui.windowBegin(U"iCalファイルをインポート", SasaGUI::WindowFlag::NoMove | SasaGUI::WindowFlag::AutoResize);
+	{
+		gui.setWindowPos(Arg::center = Scene::Center());
+		gui.setWindowSize(Size(600, 450));
+		gui.label(U"ファイルを選択してください");
+		if (gui.button(U"キャンセル"))
+		{
+			m_openingWindow = OpeningWindow::None;
+		}
+		gui.sameLine();
+		if (gui.button(U"ファイルを選択"))
+		{
+			m_inputFilePath = Dialog::OpenFile({ FileFilter{ U"iCalendar", { U"ics", U"ical", U"icalendar" }}});
+			m_openingWindow = OpeningWindow::None;
+		}
+	}
+	gui.windowEnd();
+	gui.frameEnd();
+}
+
+void MainScene::drawExportCSVWindow() const
+{
+	if (m_openingWindow != OpeningWindow::ExportCSV)
+	{
+		return;
+	}
+
+	gui.frameBegin();
+	gui.windowBegin(U"CSVとしてエクスポート", SasaGUI::WindowFlag::NoMove | SasaGUI::WindowFlag::AutoResize);
+	{
+		gui.setWindowPos(Arg::center = Scene::Center());
+		gui.setWindowSize(Size(600, 500));
+		
+		gui.label(U"文字コード");
+		gui.radiobutton(m_exportCSVCharsetIndex, 0, U"UTF-8");
+		gui.radiobutton(m_exportCSVCharsetIndex, 1, U"Shift-JIS");
+		gui.label(U"");
+
+		gui.label(U"日付のフォーマット");
+		gui.radiobutton(m_dateFormatIndex, 0, U"yyyy/MM/dd");
+		gui.radiobutton(m_dateFormatIndex, 1, U"yyyy/M/d");
+		gui.label(U"");
+
+		gui.label(U"時刻のフォーマット");
+		gui.radiobutton(m_timeFormatIndex, 0, U"HH:mm");
+		gui.radiobutton(m_timeFormatIndex, 1, U"HH時mm分");
+		gui.label(U"");
+
+		if (gui.button(U"キャンセル"))
+		{
+			m_openingWindow = OpeningWindow::None;
+		}
+		gui.sameLine();
+		if (gui.button(U"エクスポート"))
+		{
+			m_openingWindow = OpeningWindow::None;
+		}
+
+	}
+	gui.windowEnd();
+	gui.frameEnd();
 }
 
 void MainScene::drawCalendarProperty(const icalendar::ICalendar& icalendar) const
