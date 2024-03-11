@@ -28,35 +28,68 @@ void MainScene::update()
 		}
 	}
 
-	if (m_saveButton.isPushed())
+
+	if (const auto item = m_menuBar.update())
 	{
-		const auto savePath = Dialog::SaveFile({ FileFilter::CSV() });
-		if (savePath.has_value())
+		// 「インポート」が押されたら
+		if (item == MenuBarItemIndex{ 0, 1 })
 		{
-			const String charset = m_charsetPulldown.getSelectedItem();
-			s3dex::CSVEX::save(m_csv, savePath.value(), charset);
+
+		}
+
+		// 「エクスポート」が押されたら
+		if (item == MenuBarItemIndex{ 0, 2 })
+		{
+			const auto savePath = Dialog::SaveFile({ FileFilter::CSV() });
+			if (savePath.has_value())
+			{
+				const String charset = m_charsetPulldown.getSelectedItem();
+				s3dex::CSVEX::save(m_csv, savePath.value(), charset);
+			}
+		}
+
+		// 「ライセンス」が押されたら
+		if (item == MenuBarItemIndex{ 1, 2 })
+		{
+			LicenseManager::ShowInBrowser();
 		}
 	}
 
-	if (m_backToMenuButton.isPushed())
 	{
-		changeScene(State::TestScene);
+		const Transformer2D t(Mat3x2::Scale(0.85).translated(0, 400), TransformCursor::Yes);
+		m_spreadSheetGUI.update();
 	}
-
-	m_spreadSheetGUI.update();
-	m_backToMenuButton.update();
 	m_charsetPulldown.update();
-	m_saveButton.update();
 	m_menuBar.update();
 }
 
 void MainScene::draw() const
 {
-	m_backToMenuButton.draw();
 	m_charsetPulldown.draw();
-	m_saveButton.draw();
-	m_spreadSheetGUI.draw();
+	{
+		const Transformer2D t(Mat3x2::Scale(0.85).translated(0, 400), TransformCursor::Yes);
+		m_spreadSheetGUI.draw();
+	}
+
+	{
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(1500, 50), TransformCursor::Yes);
+		drawCalendarProperty(m_icalendar);
+	}
+
 	m_menuBar.draw();
+
+}
+
+void MainScene::drawCalendarProperty(const icalendar::ICalendar& icalendar) const
+{	
+	const auto& calendarProperty = icalendar.getCalendarProperty();
+	const Color color = Palette::Black;
+
+	m_font(U"Calendar Property").draw(0, 10, Palette::Black);
+	m_font(U"Version: {}"_fmt(calendarProperty.getVersion())).draw(0, 30, color);
+	m_font(U"Product ID: {}"_fmt(calendarProperty.getProdId())).draw(0, 50, color);
+	m_font(U"Scale: {}"_fmt(calendarProperty.getCalscale())).draw(0, 70, color);
+	m_font(U"Method: {}"_fmt(calendarProperty.getMethod())).draw(0, 90, color);
 }
 
 CSV MainScene::convertICalToCSV(const icalendar::ICalendar& icalendar) const

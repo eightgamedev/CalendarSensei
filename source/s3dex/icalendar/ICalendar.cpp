@@ -93,6 +93,11 @@ namespace icalendar
 		m_events.push_back(event);
 	}
 
+	CalendarProperty ICalendar::getCalendarProperty() const
+	{
+		return m_calendarProperty;
+	}
+
 	Array<Event> ICalendar::getEvents() const
 	{
 		return m_events;

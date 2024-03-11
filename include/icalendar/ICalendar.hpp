@@ -18,7 +18,8 @@ namespace icalendar
 		void save(const FilePath& path) const;
 
 		void addEvent(const Event& event);
- 
+
+		CalendarProperty getCalendarProperty() const;
 		Array<Event> getEvents() const;
 	private:
 		CalendarProperty parseCalendarProperty();
