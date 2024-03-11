@@ -57,7 +57,7 @@ void SyukujitsuCSVToICal::update()
 
 	if (backToMenuButton.isPushed())
 	{
-		changeScene(State::MainScene);
+		changeScene(State::TestScene);
 	}
 }
 

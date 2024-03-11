@@ -14,7 +14,7 @@ void CSVToICal::update()
 
 	if (backToMenuButton.isPushed())
 	{
-		changeScene(State::MainScene);
+		changeScene(State::TestScene);
 	}
 }
 

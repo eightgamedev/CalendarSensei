@@ -1,14 +1,14 @@
 ﻿# include "Scene/Common.hpp"
-# include "Scene/MainScene.hpp"
+# include "Scene/TestScene.hpp"
 
-MainScene::MainScene(const InitData& init)
+TestScene::TestScene(const InitData& init)
 	: IScene(init)
 {
 	// 背景の色を設定する | Set the background color
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 }
 
-void MainScene::update()
+void TestScene::update()
 {
 	CSVToICalButton.update();
 	ICalToCSVButton.update();
@@ -28,7 +28,7 @@ void MainScene::update()
 	}
 }
 
-void MainScene::draw() const
+void TestScene::draw() const
 {
 	CSVToICalButton.draw();
 	ICalToCSVButton.draw();

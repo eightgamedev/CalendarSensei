@@ -4,7 +4,7 @@
 // シーンの名前
 enum class State
 {
-	MainScene,
+	TestScene,
 	CSVToICal,
 	ICalToCSV,
 	SyukujitsuCSVToICal,

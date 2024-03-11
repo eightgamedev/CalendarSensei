@@ -40,7 +40,7 @@ void ICalToCSV::update()
 
 	if (m_backToMenuButton.isPushed())
 	{
-		changeScene(State::MainScene);
+		changeScene(State::TestScene);
 	}
 
 	m_spreadSheetGUI.update();

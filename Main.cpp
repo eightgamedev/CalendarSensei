@@ -1,7 +1,7 @@
 ﻿# include <Siv3D.hpp>
 
 # include "Scene/Common.hpp"
-# include "Scene/MainScene.hpp"
+# include "Scene/TestScene.hpp"
 # include "Scene/SyukujitsuCSVToICal.hpp"
 # include "Scene/ICalToCSV.hpp"
 # include "Scene/CSVToICal.hpp"
@@ -17,12 +17,12 @@ void Main()
 	Scene::SetResizeMode(ResizeMode::Keep);
 
 	App manager;
-	manager.add<MainScene>(State::MainScene)
+	manager.add<TestScene>(State::TestScene)
 		.add<SyukujitsuCSVToICal>(State::SyukujitsuCSVToICal)
 		.add<ICalToCSV>(State::ICalToCSV)
 		.add<CSVToICal>(State::CSVToICal);
 
-	manager.init(State::MainScene);
+	manager.init(State::TestScene);
 
 	while (System::Update())
 	{

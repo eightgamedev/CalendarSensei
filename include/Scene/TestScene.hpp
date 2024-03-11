@@ -2,10 +2,10 @@
 # include "CustomizedSimpleGUI/Button.hpp"
 # include "CustomizedSimpleGUI/Pulldown.hpp"
 
-class MainScene : public App::Scene
+class TestScene : public App::Scene
 {
 public:
-	MainScene(const InitData& init);
+	TestScene(const InitData& init);
 	void update() override;
 	void draw() const override;
 private:
