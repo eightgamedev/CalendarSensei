@@ -75,7 +75,7 @@ void MainScene::drawToolWindow() const
 	gui.windowBegin(U"", SasaGUI::WindowFlag::NoMove | SasaGUI::WindowFlag::NoTitlebar);
 	{
 		gui.setWindowSize({ 600, 250 });
-		switch (gui.tab(U"ToolMenu", { U"インポート", U"エクスポート" }))
+		switch (gui.tab(U"ToolMenu", { U"インポート", U"エクスポート", U"タイムゾーン"}))
 		{
 		case 0:
 			if (gui.button(U".ics"))
@@ -93,6 +93,17 @@ void MainScene::drawToolWindow() const
 				m_openingWindow = OpeningWindow::ExportCSV;
 			}
 			gui.button(U".xlsx");
+			break;
+		case 2:
+			gui.label(U"時刻の数値はそのまま、タイムゾーンのみ変更");
+			gui.button(U"JST -> UTC");
+			gui.sameLine();
+			gui.button(U"UTC -> JST");
+
+			gui.label(U"タイムゾーンはそのまま、時刻の数値のみ変更");
+			gui.button(U"-1時間");
+			gui.sameLine();
+			gui.button(U"+1時間");
 			break;
 		}
 	}
