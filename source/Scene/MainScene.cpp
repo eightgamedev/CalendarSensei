@@ -47,6 +47,7 @@ void MainScene::update()
 	m_backToMenuButton.update();
 	m_charsetPulldown.update();
 	m_saveButton.update();
+	m_menuBar.update();
 }
 
 void MainScene::draw() const
@@ -55,6 +56,7 @@ void MainScene::draw() const
 	m_charsetPulldown.draw();
 	m_saveButton.draw();
 	m_spreadSheetGUI.draw();
+	m_menuBar.draw();
 }
 
 CSV MainScene::convertICalToCSV(const icalendar::ICalendar& icalendar) const

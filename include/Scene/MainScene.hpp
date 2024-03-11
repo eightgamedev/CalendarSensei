@@ -28,5 +28,11 @@ private:
 	size_t rowCount = 24;
 
 	SimpleGridViewer::SpreadSheet m_spreadSheetGUI{ {columnCount, rowCount }, { 10, 10 }, { 0, 0 } };
+	const Array<std::pair<String, Array<String>>> m_menus
+	{
+		{ U"ファイル", { U"新規", U"インポート", U"エクスポート", U"終了"}},
+		{ U"ヘルプ", { U"\U000F0625  遊び方", U"\U000F14F7  リリースノート", U"ライセンス" }},
+	};
 
+	SimpleMenuBar m_menuBar{ m_menus };
 };
