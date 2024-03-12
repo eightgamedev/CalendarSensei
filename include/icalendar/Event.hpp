@@ -1,5 +1,6 @@
 ﻿# pragma once
 # include "icalendar/Time.hpp"
+# include "icalendar/RecurrenceRule.hpp"
 
 namespace icalendar
 {
@@ -14,6 +15,7 @@ namespace icalendar
 		void setTimeZoneName(const Optional<String>& timeZone);
 		void setStart(const DateTime& startUTC);
 		void setEnd(const DateTime& endUTC);
+		void setRecurrenceRule(const RecurrenceRule& recurrenceRule);
 		void setSummary(const String& summary);
 		void setDescription(const String& description);
 		void setLocation(const String& location);
@@ -29,6 +31,7 @@ namespace icalendar
 		Optional<String> getTimeZoneName() const;
 		DateTime getStart() const;
 		DateTime getEnd() const;
+		Optional<RecurrenceRule> getRecurrenceRule() const;
 		String getSummary() const;
 		Optional<String> getDescription() const;
 		Optional<String> getLocation() const;
@@ -52,6 +55,9 @@ namespace icalendar
 
 		// イベントの終了日時
 		DateTime m_endUTC;
+
+		// イベントの繰り返し規則
+		Optional<RecurrenceRule> m_recurrenceRule;
 
 		// イベントのタイトル
 		String m_summary;

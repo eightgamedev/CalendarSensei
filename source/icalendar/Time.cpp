@@ -95,4 +95,44 @@ namespace icalendar::time
 	{
 		return dateTime.format(U"yyyyMMdd") + U"T" + dateTime.format(U"HHmmss") + U"Z";
 	}
+
+	/// @brief iCal文字列をDayOfWeekに変換
+	/// @param iCalString
+	/// @return DayOfWeek
+	DayOfWeek time::parseToDayOfWeek(const String& iCalString)
+	{
+		if (iCalString == U"SU")
+		{
+			return DayOfWeek::Sunday;
+		}
+		else if (iCalString == U"MO")
+		{
+			return DayOfWeek::Monday;
+		}
+		else if (iCalString == U"TU")
+		{
+			return DayOfWeek::Tuesday;
+		}
+		else if (iCalString == U"WE")
+		{
+			return DayOfWeek::Wednesday;
+		}
+		else if (iCalString == U"TH")
+		{
+			return DayOfWeek::Thursday;
+		}
+		else if (iCalString == U"FR")
+		{
+			return DayOfWeek::Friday;
+		}
+		else if (iCalString == U"SA")
+		{
+			return DayOfWeek::Saturday;
+		}
+		else
+		{
+			throw Error(U"Invalid DayOfWeek string"_fmt(iCalString));
+		}
+	}
+
 }

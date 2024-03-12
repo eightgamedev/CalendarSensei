@@ -55,6 +55,12 @@ namespace icalendar
 				DateTime endDate = time::parseToDateTime(value);
 				event.setEnd(endDate);
 			}},
+
+			{U"RRULE:", [&](const String& value) {
+				RecurrenceRule rule = RecurrenceRule::parseFromICal(value);
+				event.setRecurrenceRule(rule);
+			}},
+
 			{U"SUMMARY:", [&](const String& value) {
 				event.setSummary(value);
 			}},
@@ -152,6 +158,11 @@ namespace icalendar
 		m_endUTC = endUTC;
 	}
 
+	void Event::setRecurrenceRule(const RecurrenceRule& recurrenceRule)
+	{
+		m_recurrenceRule = recurrenceRule;
+	}
+
 	void Event::setSummary(const String& summary)
 	{
 		m_summary = summary;
@@ -220,6 +231,11 @@ namespace icalendar
 	DateTime Event::getEnd() const
 	{
 		return m_endUTC;
+	}
+
+	Optional<RecurrenceRule> Event::getRecurrenceRule() const
+	{
+		return m_recurrenceRule;
 	}
 
 	String Event::getSummary() const

@@ -6,14 +6,16 @@ namespace icalendar
 	{
 	}
 
-	void RecurrenceRule::parseFromICal(RecurrenceRule& rule, const String& icalRow)
+	RecurrenceRule RecurrenceRule::parseFromICal(const String& rrules)
 	{
+		RecurrenceRule rule;
+
 		// プレフィックスと対応する処理をマップに格納
 		HashTable<String, std::function<void(const String&)>> prefixHandlers = {
-			{ U"FREQ=", [&](const String& value) { rule.setFrequency(value); } },
-			{ U"INTERVAL=", [&](const String& value) { rule.setInterval(ParseInt<int32>(value)); } },
-			{ U"COUNT=", [&](const String& value) { rule.setCount(ParseInt<int32>(value)); } },
-			{ U"UNTIL=", [&](const String& value) {
+			{ U"FREQ", [&](const String& value) { rule.setFrequency(value); } },
+			{ U"INTERVAL", [&](const String& value) { rule.setInterval(ParseInt<int32>(value)); } },
+			{ U"COUNT", [&](const String& value) { rule.setCount(ParseInt<int32>(value)); } },
+			{ U"UNTIL", [&](const String& value) {
 				// DTSTARTの値型とUNTILの値型が一致しているか、
 				// またDTSTARTが現地時間で指定されている場合にUNTILも現地時間で指定されているかなどのチェックが必要
 
@@ -34,30 +36,55 @@ namespace icalendar
 					throw Error(U"Invalid UNTIL value: {}"_fmt(value));
 				}
 			}},
-			{ U"BYSECOND=", [&](const String& value) { rule.setBySecond(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
-			{ U"BYMINUTE=", [&](const String& value) { rule.setByMinute(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
-			{ U"BYHOUR=", [&](const String& value) { rule.setByHour(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
-			{ U"BYDAY=", [&](const String& value) { rule.setByDay(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
-			{ U"BYMONTHDAY=", [&](const String& value) { rule.setByMonthDay(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
-			{ U"BYYEARDAY=", [&](const String& value) { rule.setByYearDay(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
-			{ U"BYWEEKNO=", [&](const String& value) { rule.setByWeekNo(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
-			{ U"BYMONTH=", [&](const String& value) { rule.setByMonth(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
-			{ U"BYSETPOS=", [&](const String& value) { rule.setBySetPos(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
+			{ U"BYSECOND", [&](const String& value) { rule.setBySecond(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
+			{ U"BYMINUTE", [&](const String& value) { rule.setByMinute(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
+			{ U"BYHOUR", [&](const String& value) { rule.setByHour(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
+			{ U"BYDAY", [&](const String& value) { rule.setByDay(value.split(',').map([](const String& s) {
+				ByDay byDay;
+				if (s.length() == 2)
+				{
+					byDay.dayOfWeek = icalendar::time::parseToDayOfWeek(s);
+				}
+				else
+				{
+					size_t offsetEnd = s.narrow().find_first_of("MO,TU,WE,TH,FR,SA,SU");
+					byDay.dayOfWeek = icalendar::time::parseToDayOfWeek(s.substr(offsetEnd));
+					byDay.day = ParseInt<int32>(s.substr(0, offsetEnd));
+				}
+				return byDay;
+				})); } },
+			{ U"BYMONTHDAY", [&](const String& value) { rule.setByMonthDay(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
+			{ U"BYYEARDAY", [&](const String& value) { rule.setByYearDay(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
+			{ U"BYWEEKNO", [&](const String& value) { rule.setByWeekNo(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
+			{ U"BYMONTH", [&](const String& value) { rule.setByMonth(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
+			{ U"BYSETPOS", [&](const String& value) { rule.setBySetPos(value.split(',').map([](const String& s) { return ParseInt<int32>(s); })); } },
 		};
 
-		// マップをループして、行がどのプレフィックスで始まるかを確認
-		for (const auto& [prefix, handler] : prefixHandlers)
+		// 先頭の"RRULE:"を削除したものをセミコロンで分割
+		Array<String> parameters = rrules.split(';');
+
+		// パラメータを解析
+		for (const String& parameter : parameters)
 		{
-			if (icalRow.starts_with(prefix))
+			// パラメータ名と値に分割
+			const size_t separator = parameter.indexOf('=');
+			const String prefix = parameter.substr(0, separator);
+			const String value = parameter.substr(separator + 1);
+
+			// プレフィックスに対応する処理を実行
+			if (const auto handler = prefixHandlers.find(prefix); handler != prefixHandlers.end())
 			{
-				// プレフィックスを除去して値を取得
-				String value = icalRow.substr(prefix.length());
-				// 対応する処理を実行
-				handler(value);
-				break;
+				handler->second(value);
 			}
+			else
+			{
+				// 未知のプレフィックスが指定された場合はエラーをスロー
+				throw Error(U"Unknown prefix: {}"_fmt(prefix));
+			}
+
 		}
 
+		return rule;
 	}
 
 	void RecurrenceRule::setFrequency(const String& frequency)
@@ -100,7 +127,7 @@ namespace icalendar
 		m_byHour = byHour;
 	}
 
-	void RecurrenceRule::setByDay(const Array<int32>& byDay)
+	void RecurrenceRule::setByDay(const Array<ByDay>& byDay)
 	{
 		m_byDay = byDay;
 	}
@@ -160,47 +187,47 @@ namespace icalendar
 		return m_start;
 	}
 
-	const Optional<Array<int32>>& RecurrenceRule::getBySecond() const
+	const Array<int32>& RecurrenceRule::getBySecond() const
 	{
 		return m_bySecond;
 	}
 
-	const Optional<Array<int32>>& RecurrenceRule::getByMinute() const
+	const Array<int32>& RecurrenceRule::getByMinute() const
 	{
 		return m_byMinute;
 	}
 
-	const Optional<Array<int32>>& RecurrenceRule::getByHour() const
+	const Array<int32>& RecurrenceRule::getByHour() const
 	{
 		return m_byHour;
 	}
 
-	const Optional<Array<int32>>& RecurrenceRule::getByDay() const
+	const Array<ByDay>& RecurrenceRule::getByDay() const
 	{
 		return m_byDay;
 	}
 
-	const Optional<Array<int32>>& RecurrenceRule::getByMonthDay() const
+	const Array<int32>& RecurrenceRule::getByMonthDay() const
 	{
 		return m_byMonthDay;
 	}
 
-	const Optional<Array<int32>>& RecurrenceRule::getByYearDay() const
+	const Array<int32>& RecurrenceRule::getByYearDay() const
 	{
 		return m_byYearDay;
 	}
 
-	const Optional<Array<int32>>& RecurrenceRule::getByWeekNo() const
+	const Array<int32>& RecurrenceRule::getByWeekNo() const
 	{
 		return m_byWeekNo;
 	}
 
-	const Optional<Array<int32>>& RecurrenceRule::getByMonth() const
+	const Array<int32>& RecurrenceRule::getByMonth() const
 	{
 		return m_byMonth;
 	}
 
-	const Optional<Array<int32>>& RecurrenceRule::getBySetPos() const
+	const Array<int32>& RecurrenceRule::getBySetPos() const
 	{
 		return m_bySetPos;
 	}

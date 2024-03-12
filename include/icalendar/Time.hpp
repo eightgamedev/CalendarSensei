@@ -10,5 +10,6 @@ namespace icalendar
 		DateTime toUTC(const DateTime& dateTime, const String& timeZoneName);
 		DateTime toLocal(const DateTime& dateTime, const String& timeZoneName);
 		String parseToICalDateTime(const DateTime& dateTime);
+		DayOfWeek parseToDayOfWeek(const String& iCalString);
 	};
 }
