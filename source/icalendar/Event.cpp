@@ -11,8 +11,10 @@ namespace icalendar
 	{
 	}
 
-	void Event::parseFromICal(Event& event, const Array<String>& iCalContent)
+	Event Event::parseFromICal(const Array<String>& iCalContent)
 	{
+		Event event;
+
 		// プレフィックスと対応する処理をマップに格納
 		std::map<String, std::function<void(const String&)>> prefixHandlers = {
 			{U"DTSTART;VALUE=DATE:", [&](const String& value) {
@@ -113,7 +115,7 @@ namespace icalendar
 				}
 			}
 		}
-
+		return event;
 	}
 
 	String Event::toICalString() const {

@@ -54,9 +54,7 @@ namespace icalendar
 
 		for (const auto& icsContent : icsContentAboutEvent)
 		{
-			Event event;
-			Event::parseFromICal(event, icsContent);
-			addEvent(event);
+			addEvent(Event::parseFromICal(icsContent));
 		}
 	}
 
