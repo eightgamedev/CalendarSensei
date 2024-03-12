@@ -133,6 +133,12 @@
     <ClCompile Include="source\CustomizedSimpleGUI\Pulldown.cpp" />
     <ClCompile Include="source\gridcell\CellGrid.cpp" />
     <ClCompile Include="source\gridcell\GuiGridAxis.cpp" />
+    <ClCompile Include="source\icalendar\actions\Action.cpp" />
+    <ClCompile Include="source\icalendar\actions\AudioAction.cpp" />
+    <ClCompile Include="source\icalendar\actions\DisplayAction.cpp" />
+    <ClCompile Include="source\icalendar\actions\EmailAction.cpp" />
+    <ClCompile Include="source\icalendar\actions\ProcedureAction.cpp" />
+    <ClCompile Include="source\icalendar\Alarm.cpp" />
     <ClCompile Include="source\icalendar\CalendarProperty.cpp" />
     <ClCompile Include="source\icalendar\Event.cpp" />
     <ClCompile Include="source\icalendar\ICalendar.cpp" />
@@ -357,6 +363,12 @@
     <ClInclude Include="include\CustomizedSimpleGUI\Pulldown.hpp" />
     <ClInclude Include="include\gridcell\CellGrid.hpp" />
     <ClInclude Include="include\gridcell\GuiGridAxis.hpp" />
+    <ClInclude Include="include\icalendar\actions\Action.hpp" />
+    <ClInclude Include="include\icalendar\actions\AudioAction.hpp" />
+    <ClInclude Include="include\icalendar\actions\DisplayAction.hpp" />
+    <ClInclude Include="include\icalendar\actions\EmailAction.hpp" />
+    <ClInclude Include="include\icalendar\actions\ProcedureAction.hpp" />
+    <ClInclude Include="include\icalendar\Alarm.hpp" />
     <ClInclude Include="include\icalendar\CalendarProperty.hpp" />
     <ClInclude Include="include\icalendar\Event.hpp" />
     <ClInclude Include="include\icalendar\ICalendar.hpp" />

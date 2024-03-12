@@ -222,6 +222,12 @@ namespace icalendar
 		m_transparent = transparent;
 	}
 
+	void Event::addAlarm(std::unique_ptr<Alarm> alarm)
+	{
+		m_alarms.emplace_back(std::move(alarm));
+	}
+
+
 	bool Event::isAllDay() const
 	{
 		return m_isAllDay;
@@ -301,4 +307,10 @@ namespace icalendar
 	{
 		return m_transparent;
 	}
+
+	const Array<std::shared_ptr<Alarm>>& Event::getAlarms() const
+	{
+		return m_alarms;
+	}
+
 }

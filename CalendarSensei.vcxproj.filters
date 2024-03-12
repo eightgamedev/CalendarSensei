@@ -178,6 +178,12 @@
     <Filter Include="Source Files\icalendar">
       <UniqueIdentifier>{d1c33e45-6bd2-4e3c-a29f-d13c13fb4339}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\icalendar\actions">
+      <UniqueIdentifier>{f5226b1e-e6a5-41d1-adf1-75cceee3aa9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\icalendar\actions">
+      <UniqueIdentifier>{181fc98e-1978-4a12-89e2-efbf86974b2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -232,6 +238,24 @@
       <Filter>Source Files\icalendar</Filter>
     </ClCompile>
     <ClCompile Include="source\icalendar\Time.cpp">
+      <Filter>Source Files\icalendar</Filter>
+    </ClCompile>
+    <ClCompile Include="source\icalendar\actions\Action.cpp">
+      <Filter>Source Files\icalendar\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="source\icalendar\actions\AudioAction.cpp">
+      <Filter>Source Files\icalendar\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="source\icalendar\actions\DisplayAction.cpp">
+      <Filter>Source Files\icalendar\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="source\icalendar\actions\EmailAction.cpp">
+      <Filter>Source Files\icalendar\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="source\icalendar\actions\ProcedureAction.cpp">
+      <Filter>Source Files\icalendar\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="source\icalendar\Alarm.cpp">
       <Filter>Source Files\icalendar</Filter>
     </ClCompile>
   </ItemGroup>
@@ -945,6 +969,24 @@
       <Filter>Header Files\Snece</Filter>
     </ClInclude>
     <ClInclude Include="include\icalendar\RecurrenceRule.hpp">
+      <Filter>Header Files\icalendar</Filter>
+    </ClInclude>
+    <ClInclude Include="include\icalendar\actions\Action.hpp">
+      <Filter>Header Files\icalendar\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="include\icalendar\actions\AudioAction.hpp">
+      <Filter>Header Files\icalendar\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="include\icalendar\actions\DisplayAction.hpp">
+      <Filter>Header Files\icalendar\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="include\icalendar\actions\EmailAction.hpp">
+      <Filter>Header Files\icalendar\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="include\icalendar\actions\ProcedureAction.hpp">
+      <Filter>Header Files\icalendar\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="include\icalendar\Alarm.hpp">
       <Filter>Header Files\icalendar</Filter>
     </ClInclude>
   </ItemGroup>

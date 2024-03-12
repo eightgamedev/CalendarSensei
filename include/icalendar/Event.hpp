@@ -1,6 +1,7 @@
 ﻿# pragma once
 # include "icalendar/Time.hpp"
 # include "icalendar/RecurrenceRule.hpp"
+# include "icalendar/Alarm.hpp"
 
 namespace icalendar
 {
@@ -27,6 +28,7 @@ namespace icalendar
 		void setSequence(const String& sequence);
 		void setStatus(const String& status);
 		void setTransparent(const String& transparent);
+		void addAlarm(std::unique_ptr<Alarm> alarm);
 
 		bool isAllDay() const;
 		Optional<String> getTimeZoneName() const;
@@ -44,6 +46,7 @@ namespace icalendar
 		Optional<String> getSequence() const;
 		Optional<String> getStatus() const;
 		Optional<String> getTransparent() const;
+		const Array<std::shared_ptr<Alarm>>& getAlarms() const;
 
 	private:
 		bool m_isAllDay;
@@ -84,5 +87,8 @@ namespace icalendar
 		Optional<String> m_status;
 
 		Optional<String> m_transparent;
+
+		// アラーム
+		Array<std::shared_ptr<Alarm>> m_alarms;
 	};
 }
