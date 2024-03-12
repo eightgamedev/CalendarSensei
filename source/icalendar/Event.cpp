@@ -94,6 +94,9 @@ namespace icalendar
 			{U"STATUS:", [&](const String& value) {
 				event.setStatus(value);
 			}},
+			{U"TRANSPARENT:", [&](const String& value) {
+				event.setTransparent(value);
+			}},
 		};
 
 		// マップをループして、行がどのプレフィックスで始まるかを確認
