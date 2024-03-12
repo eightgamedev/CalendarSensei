@@ -10,7 +10,7 @@ namespace icalendar
 	public:
 		Event();
 		~Event();
-		static void parseFromICal(Event& event, const String& iCalString);
+		static void parseFromICal(Event& event, const Array<String>& iCalContent);
 		String toICalString() const;
 		void setIsAllDay(bool isAllDay);
 		void setTimeZoneName(const Optional<String>& timeZone);

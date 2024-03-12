@@ -27,27 +27,36 @@ namespace icalendar
 		setCalendarProperty(parseCalendarProperty());
 
 		String line;
-		std::optional<Event> currentEvent;
+		// std::optional<Event> currentEvent;
 		m_textReader.close();
 		m_textReader.open(path);
+		Array<Array<String>> icsContentAboutEvent; // BEGIN:VEVENTからEND:VEVENTまで行を格納する配列の配列
+		Array<String> icsContent; // BEGIN:VEVENTからEND:VEVENTまでの行を格納する配列
+
 		while (m_textReader.readLine(line))
 		{
-			if (line.starts_with(U"BEGIN:VEVENT"))
+			if (line.starts_with(U"END:VEVENT"))
 			{
-				currentEvent = Event();
+				icsContent.emplace_back(line);
+				icsContentAboutEvent.emplace_back(icsContent);
+				icsContent.clear();
 			}
-			else if (line.starts_with(U"END:VEVENT"))
+			else if (line.starts_with(U"BEGIN:VEVENT"))
 			{
-				if (currentEvent.has_value())
-				{
-					m_events.push_back(currentEvent.value());
-					currentEvent.reset();
-				}
+				icsContent.clear();
+				icsContent.emplace_back(line);
 			}
-			else if (currentEvent.has_value())
+			else
 			{
-				Event::parseFromICal(*currentEvent, line);
+				icsContent.emplace_back(line);
 			}
+		}
+
+		for (const auto& icsContent : icsContentAboutEvent)
+		{
+			Event event;
+			Event::parseFromICal(event, icsContent);
+			addEvent(event);
 		}
 	}
 

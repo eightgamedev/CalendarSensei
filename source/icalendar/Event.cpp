@@ -11,7 +11,7 @@ namespace icalendar
 	{
 	}
 
-	void Event::parseFromICal(Event& event, const String& iCalString) 
+	void Event::parseFromICal(Event& event, const Array<String>& iCalContent)
 	{
 		// プレフィックスと対応する処理をマップに格納
 		std::map<String, std::function<void(const String&)>> prefixHandlers = {
@@ -100,17 +100,20 @@ namespace icalendar
 		};
 
 		// マップをループして、行がどのプレフィックスで始まるかを確認
-		for (const auto& [prefix, handler] : prefixHandlers)
+		for (const String& line : iCalContent)
 		{
-			if (iCalString.starts_with(prefix))
+			for (const auto& [prefix, handler] : prefixHandlers)
 			{
-				// プレフィックスを除去して値を取得
-				String value = iCalString.substr(prefix.length());
-				// 対応する処理を実行
-				handler(value);
-				break;
+				if (line.starts_with(prefix))
+				{
+					// プレフィックスを除去して値を取得
+					String value = line.substr(prefix.length());
+					// 対応する処理を実行
+					handler(value);
+				}
 			}
 		}
+
 	}
 
 	String Event::toICalString() const {
