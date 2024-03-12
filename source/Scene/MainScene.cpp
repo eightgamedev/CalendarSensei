@@ -216,9 +216,9 @@ CSV MainScene::convertICalToCSV(const icalendar::ICalendar& icalendar) const
 		csv.writeRow(
 			event.getSummary(),
 			event.getDateTimeStart().format(U"yyyy/MM/dd"),
-			event.getDateTimeStart().format(U"HH:mm"),
+			event.isAllDay() ? U"" : event.getDateTimeStart().format(U"HH:mm"),
 			event.getDateTimeEnd().format(U"yyyy/MM/dd"),
-			event.getDateTimeEnd().format(U"HH:mm"),
+			event.isAllDay() ? U"" : event.getDateTimeEnd().format(U"HH:mm"),
 			event.isAllDay() ? U"True" : U"False",
 			U"False",
 			U"",
