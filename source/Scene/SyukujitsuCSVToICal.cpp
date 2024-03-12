@@ -85,8 +85,8 @@ icalendar::Event SyukujitsuCSVToICal::PerseToEvent(const std::pair<String, Strin
 	const int32 day = Parse<int32>(dateTimeStrings[2]);
 
 	DateTime startDateTime{ year, month, day };
-	event.setStart(startDateTime);
-	event.setEnd(startDateTime + 1_d);
+	event.setDateTimeStart(startDateTime);
+	event.setDateTimeEnd(startDateTime + 1_d);
 	event.setSummary(holiday.second);
 	event.setTimeStamp(DateTime::Now());
 	return event;
@@ -98,7 +98,7 @@ icalendar::ICalendar SyukujitsuCSVToICal::makeICalendar(DateTime rangeBegin, Dat
 	for (const auto& holiday : *holidayList)
 	{
 		icalendar::Event event = PerseToEvent(holiday);
-		if (rangeBegin <= event.getStart() && event.getStart() <= rangeEnd)
+		if (rangeBegin <= event.getDateTimeStart() && event.getDateTimeStart() <= rangeEnd)
 		{
 			icalendar.addEvent(event);
 		}

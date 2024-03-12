@@ -19,7 +19,7 @@ namespace icalendar
 		void setInterval(int32 interval);
 		void setCount(int32 count);
 		void setUntil(const DateTime& until);
-		void setStart(const DateTime& start);
+		void setDateTimeStart(const DateTime& start);
 		void setBySecond(const Array<int32>& bySecond);
 		void setByMinute(const Array<int32>& byMinute);
 		void setByHour(const Array<int32>& byHour);
@@ -34,7 +34,7 @@ namespace icalendar
 		Optional<int32> getInterval() const;
 		Optional<int32> getCount() const;
 		const Optional<DateTime>& getUntil() const;
-		const DateTime& getStart() const;
+		const DateTime& getDateTimeStart() const;
 		const Array<int32>& getBySecond() const;
 		const Array<int32>& getByMinute() const;
 		const Array<int32>& getByHour() const;

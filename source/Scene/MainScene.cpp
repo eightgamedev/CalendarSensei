@@ -215,10 +215,10 @@ CSV MainScene::convertICalToCSV(const icalendar::ICalendar& icalendar) const
 	{
 		csv.writeRow(
 			event.getSummary(),
-			event.getStart().format(U"yyyy/MM/dd"),
-			event.getStart().format(U"HH:mm"),
-			event.getEnd().format(U"yyyy/MM/dd"),
-			event.getEnd().format(U"HH:mm"),
+			event.getDateTimeStart().format(U"yyyy/MM/dd"),
+			event.getDateTimeStart().format(U"HH:mm"),
+			event.getDateTimeEnd().format(U"yyyy/MM/dd"),
+			event.getDateTimeEnd().format(U"HH:mm"),
 			event.isAllDay() ? U"True" : U"False",
 			U"False",
 			U"",

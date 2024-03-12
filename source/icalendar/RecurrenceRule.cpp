@@ -107,7 +107,7 @@ namespace icalendar
 		m_until = until;
 	}
 
-	void RecurrenceRule::setStart(const DateTime& start)
+	void RecurrenceRule::setDateTimeStart(const DateTime& start)
 	{
 		m_start = start;
 	}
@@ -182,7 +182,7 @@ namespace icalendar
 		return m_until;
 	}
 
-	const DateTime& RecurrenceRule::getStart() const
+	const DateTime& RecurrenceRule::getDateTimeStart() const
 	{
 		return m_start;
 	}
