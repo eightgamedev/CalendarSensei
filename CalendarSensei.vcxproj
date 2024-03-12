@@ -133,11 +133,12 @@
     <ClCompile Include="source\CustomizedSimpleGUI\Pulldown.cpp" />
     <ClCompile Include="source\gridcell\CellGrid.cpp" />
     <ClCompile Include="source\gridcell\GuiGridAxis.cpp" />
+    <ClCompile Include="source\icalendar\CalendarProperty.cpp" />
+    <ClCompile Include="source\icalendar\Event.cpp" />
+    <ClCompile Include="source\icalendar\ICalendar.cpp" />
+    <ClCompile Include="source\icalendar\RecurrenceRule.cpp" />
+    <ClCompile Include="source\icalendar\Time.cpp" />
     <ClCompile Include="source\s3dex\CSVEX.cpp" />
-    <ClCompile Include="source\s3dex\icalendar\CalendarProperty.cpp" />
-    <ClCompile Include="source\s3dex\icalendar\Event.cpp" />
-    <ClCompile Include="source\s3dex\icalendar\ICalendar.cpp" />
-    <ClCompile Include="source\s3dex\icalendar\Time.cpp" />
     <ClCompile Include="source\SasaGUI\SasaGUI.cpp" />
     <ClCompile Include="source\Scene\CSVToICal.cpp" />
     <ClCompile Include="source\Scene\MainScene.cpp" />
@@ -359,6 +360,7 @@
     <ClInclude Include="include\icalendar\CalendarProperty.hpp" />
     <ClInclude Include="include\icalendar\Event.hpp" />
     <ClInclude Include="include\icalendar\ICalendar.hpp" />
+    <ClInclude Include="include\icalendar\RecurrenceRule.hpp" />
     <ClInclude Include="include\icalendar\Time.hpp" />
     <ClInclude Include="include\s3dex\CSVEX.hpp" />
     <ClInclude Include="include\SasaGUI\SasaGUI.hpp" />

@@ -189,9 +189,6 @@
     <ClCompile Include="source\CustomizedSimpleGUI\Button.cpp">
       <Filter>Source Files\CustomizedSimpleGUI</Filter>
     </ClCompile>
-    <ClCompile Include="source\s3dex\icalendar\CalendarProperty.cpp">
-      <Filter>Source Files\icalendar</Filter>
-    </ClCompile>
     <ClCompile Include="source\gridcell\CellGrid.cpp">
       <Filter>Source Files\gridcell</Filter>
     </ClCompile>
@@ -200,12 +197,6 @@
     </ClCompile>
     <ClCompile Include="source\Scene\CSVToICal.cpp">
       <Filter>Source Files\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="source\s3dex\icalendar\Event.cpp">
-      <Filter>Source Files\icalendar</Filter>
-    </ClCompile>
-    <ClCompile Include="source\s3dex\icalendar\ICalendar.cpp">
-      <Filter>Source Files\icalendar</Filter>
     </ClCompile>
     <ClCompile Include="source\gridcell\GuiGridAxis.cpp">
       <Filter>Source Files\gridcell</Filter>
@@ -219,9 +210,6 @@
     <ClCompile Include="source\SimpleGridViewer\SpreadSheet.cpp">
       <Filter>Source Files\SimpleGridViewer</Filter>
     </ClCompile>
-    <ClCompile Include="source\s3dex\icalendar\Time.cpp">
-      <Filter>Source Files\icalendar</Filter>
-    </ClCompile>
     <ClCompile Include="source\Scene\SyukujitsuCSVToICal.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
@@ -230,6 +218,21 @@
     </ClCompile>
     <ClCompile Include="source\Scene\MainScene.cpp">
       <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="source\icalendar\RecurrenceRule.cpp">
+      <Filter>Source Files\icalendar</Filter>
+    </ClCompile>
+    <ClCompile Include="source\icalendar\CalendarProperty.cpp">
+      <Filter>Source Files\icalendar</Filter>
+    </ClCompile>
+    <ClCompile Include="source\icalendar\Event.cpp">
+      <Filter>Source Files\icalendar</Filter>
+    </ClCompile>
+    <ClCompile Include="source\icalendar\ICalendar.cpp">
+      <Filter>Source Files\icalendar</Filter>
+    </ClCompile>
+    <ClCompile Include="source\icalendar\Time.cpp">
+      <Filter>Source Files\icalendar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -940,6 +943,9 @@
     </ClInclude>
     <ClInclude Include="include\Scene\MainScene.hpp">
       <Filter>Header Files\Snece</Filter>
+    </ClInclude>
+    <ClInclude Include="include\icalendar\RecurrenceRule.hpp">
+      <Filter>Header Files\icalendar</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
