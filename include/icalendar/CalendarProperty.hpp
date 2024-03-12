@@ -7,6 +7,7 @@ namespace icalendar
 	public:
 		CalendarProperty();
 		~CalendarProperty();
+		static CalendarProperty parseFromICS(const Array<String>& icsContent);
 		void setVersion(const String& version);
 		void setProdId(const String& prodId);
 		void setCalscale(const String& calscale);

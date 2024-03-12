@@ -10,6 +10,47 @@ namespace icalendar
 	{
 	}
 
+	CalendarProperty CalendarProperty::parseFromICS(const Array<String>& icsContent)
+	{
+		CalendarProperty calendarProperty;
+		HashTable<String, std::function<void(const String&)>> prefixHandlers = {
+			{ U"VERSION", [&](const String& value) {
+				calendarProperty.setVersion(value);
+			} },
+			{ U"PRODID", [&](const String& value) {
+				calendarProperty.setProdId(value);
+			} },
+			{ U"CALSCALE", [&](const String& value) {
+				calendarProperty.setCalscale(value);
+			} },
+			{ U"METHOD", [&](const String& value) {
+				calendarProperty.setMethod(value);
+			} },
+			{ U"X-WR-CALNAME", [&](const String& value) {
+				calendarProperty.setGoogle_CALNAME(value);
+			} },
+			{ U"X-WR-CALDESC", [&](const String& value) {
+				calendarProperty.setGoogle_CALDESC(value);
+			} },
+			{ U"X-WR-TIMEZONE", [&](const String& value) {
+				calendarProperty.setGoogle_TIMEZONE(value);
+			} },
+		};
+
+		for (const String& line : icsContent)
+		{
+			size_t colonIndex = line.indexOf(U':');
+			auto prefix = line.substr(0, colonIndex);
+			auto value = line.substr(colonIndex + 1);
+			if (prefixHandlers.contains(prefix))
+			{
+				prefixHandlers[prefix](value);
+			}
+		}
+
+		return calendarProperty;
+	}
+
 	void CalendarProperty::setVersion(const String& version)
 	{
 		m_version = version;

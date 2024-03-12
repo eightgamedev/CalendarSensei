@@ -24,7 +24,7 @@ namespace icalendar
 			throw Error{ U"Failed to open the file : {}"_fmt(path) };
 		}
 
-		setCalendarProperty(parseCalendarProperty());
+		setCalendarProperty(CalendarProperty::parseFromICS(m_textReader.readLines()));
 
 		String line;
 		// std::optional<Event> currentEvent;
@@ -110,56 +110,56 @@ namespace icalendar
 		return m_events;
 	}
 
-	CalendarProperty ICalendar::parseCalendarProperty()
-	{
-		CalendarProperty calendarProperty;
-		String line;
+	//CalendarProperty ICalendar::parseCalendarProperty()
+	//{
+	//	CalendarProperty calendarProperty;
+	//	String line;
 
-		// プレフィックスと対応する処理をマップに格納
-		std::map<String, std::function<void(const String&)>> prefixHandlers = {
-			{U"PRODID:", [&](const String& value) {
-				calendarProperty.setProdId(value);
-			}},
-			{U"VERSION:", [&](const String& value) {
-				calendarProperty.setVersion(value);
-			}},
-			{U"CALSCALE:", [&](const String& value) {
-				calendarProperty.setCalscale(value);
-			}},
-			{U"METHOD:", [&](const String& value) {
-				calendarProperty.setMethod(value);
-			}},
-			{U"X-WR-CALNAME:", [&](const String& value) {
-				calendarProperty.setGoogle_CALNAME(value);
-			}},
-			{U"X-WR-CALDESC:", [&](const String& value) {
-				calendarProperty.setGoogle_CALDESC(value);
-			}},
-			{U"X-WR-TIMEZONE:", [&](const String& value) {
-				calendarProperty.setGoogle_TIMEZONE(value);
-			}}
-		};
+	//	// プレフィックスと対応する処理をマップに格納
+	//	std::map<String, std::function<void(const String&)>> prefixHandlers = {
+	//		{U"PRODID:", [&](const String& value) {
+	//			calendarProperty.setProdId(value);
+	//		}},
+	//		{U"VERSION:", [&](const String& value) {
+	//			calendarProperty.setVersion(value);
+	//		}},
+	//		{U"CALSCALE:", [&](const String& value) {
+	//			calendarProperty.setCalscale(value);
+	//		}},
+	//		{U"METHOD:", [&](const String& value) {
+	//			calendarProperty.setMethod(value);
+	//		}},
+	//		{U"X-WR-CALNAME:", [&](const String& value) {
+	//			calendarProperty.setGoogle_CALNAME(value);
+	//		}},
+	//		{U"X-WR-CALDESC:", [&](const String& value) {
+	//			calendarProperty.setGoogle_CALDESC(value);
+	//		}},
+	//		{U"X-WR-TIMEZONE:", [&](const String& value) {
+	//			calendarProperty.setGoogle_TIMEZONE(value);
+	//		}}
+	//	};
 
-		while (m_textReader.readLine(line))
-		{
-			if (line.starts_with(U"BEGIN:VEVENT"))
-			{
-				break;
-			}
+	//	while (m_textReader.readLine(line))
+	//	{
+	//		if (line.starts_with(U"BEGIN:VEVENT"))
+	//		{
+	//			break;
+	//		}
 
-			// マップをループして、行がどのプレフィックスで始まるかを確認
-			for (const auto& [prefix, handler] : prefixHandlers)
-			{
-				if (line.starts_with(prefix))
-				{
-					// プレフィックスを除去して値を取得
-					String value = line.substr(prefix.length());
-					// 対応する処理を実行
-					handler(value);
-					break;
-				}
-			}
-		}
-		return calendarProperty;
-	}
+	//		// マップをループして、行がどのプレフィックスで始まるかを確認
+	//		for (const auto& [prefix, handler] : prefixHandlers)
+	//		{
+	//			if (line.starts_with(prefix))
+	//			{
+	//				// プレフィックスを除去して値を取得
+	//				String value = line.substr(prefix.length());
+	//				// 対応する処理を実行
+	//				handler(value);
+	//				break;
+	//			}
+	//		}
+	//	}
+	//	return calendarProperty;
+	//}
 }

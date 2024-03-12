@@ -22,7 +22,7 @@ namespace icalendar
 		CalendarProperty getCalendarProperty() const;
 		Array<Event> getEvents() const;
 	private:
-		CalendarProperty parseCalendarProperty();
+		// CalendarProperty parseCalendarProperty();
 		CalendarProperty m_calendarProperty;
 		TextReader m_textReader;
 		// Eventクラスのインスタンスのリスト
