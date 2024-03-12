@@ -17,7 +17,7 @@ namespace icalendar
 		std::map<String, std::function<void(const String&)>> prefixHandlers = {
 			{U"DTSTART;VALUE=DATE:", [&](const String& value) {
 				DateTime startDate = time::parseToDateTime(value);
-				event.setStart(startDate);
+				event.setDateTimeStart(startDate);
 				event.setIsAllDay(true);
 			}},
 			{U"DTSTART;TZID=", [&](const String& value) {
@@ -28,18 +28,18 @@ namespace icalendar
 				const DateTime dateTimeUTC = time::toUTC(dateTimeLocal, timeZoneName);
 
 				event.setTimeZoneName(timeZoneName);
-				event.setStart(dateTimeUTC);
+				event.setDateTimeStart(dateTimeUTC);
 				event.setIsAllDay(false);
 			}},
 
 			{U"DTSTART:", [&](const String& value) {
 				DateTime startDate = time::parseToDateTime(value);
-				event.setStart(startDate);
+				event.setDateTimeStart(startDate);
 				event.setIsAllDay(false);
 			}},
 			{U"DTEND;VALUE=DATE:", [&](const String& value) {
 				DateTime endDate = time::parseToDateTime(value);
-				event.setEnd(endDate);
+				event.setDateTimeEnd(endDate);
 			}},
 			{U"DTEND;TZID=", [&](const String& value) {
 				const size_t timeZoneNameEnd = value.includes(U":") ? value.indexOf(U":") : value.length();
@@ -49,11 +49,11 @@ namespace icalendar
 				const DateTime dateTimeUTC = time::toUTC(dateTimeLocal, timeZoneName);
 
 				event.setTimeZoneName(timeZoneName);
-				event.setEnd(dateTimeUTC);
+				event.setDateTimeEnd(dateTimeUTC);
 			}},
 			{U"DTEND:", [&](const String& value) {
 				DateTime endDate = time::parseToDateTime(value);
-				event.setEnd(endDate);
+				event.setDateTimeEnd(endDate);
 			}},
 
 			{U"RRULE:", [&](const String& value) {
@@ -75,7 +75,7 @@ namespace icalendar
 				event.setTimeStamp(timeStamp);
 			}},
 			{U"UID:", [&](const String& value) {
-				event.setUid(value);
+				event.setUniqueID(value);
 			}},
 			{U"CLASS:", [&](const String& value) {
 				event.setClass(value);
@@ -115,13 +115,13 @@ namespace icalendar
 		iCalString += U"BEGIN:VEVENT\n";
 		if (isAllDay())
 		{
-			iCalString += U"DTSTART;VALUE=DATE:" + getStart().format(U"yyyyMMdd") + U"\n";
-			iCalString += U"DTEND;VALUE=DATE:" + getEnd().format(U"yyyyMMdd") + U"\n";
+			iCalString += U"DTSTART;VALUE=DATE:" + getDateTimeStart().format(U"yyyyMMdd") + U"\n";
+			iCalString += U"DTEND;VALUE=DATE:" + getDateTimeEnd().format(U"yyyyMMdd") + U"\n";
 		}
 		else
 		{
-			iCalString += U"DTSTART:" + time::parseToICalDateTime(getStart()) + U"\n";
-			iCalString += U"DTEND:" + time::parseToICalDateTime(getEnd()) + U"\n";
+			iCalString += U"DTSTART:" + time::parseToICalDateTime(getDateTimeStart()) + U"\n";
+			iCalString += U"DTEND:" + time::parseToICalDateTime(getDateTimeEnd()) + U"\n";
 		}
 
 		iCalString += U"SUMMARY:" + getSummary() + U"\n";
@@ -148,14 +148,18 @@ namespace icalendar
 		m_timeZoneName = timeZoneName;
 	}
 
-	void Event::setStart(const DateTime& startUTC)
+	/// @brief
+	/// @param dateTimeStart (UTC) 
+	void Event::setDateTimeStart(const DateTime& dateTimeStart)
 	{
-		m_startUTC = startUTC;
+		m_dateTimeStart = dateTimeStart;
 	}
 
-	void Event::setEnd(const DateTime& endUTC)
+	/// @brief 
+	/// @param dateTimeEnd (UTC) 
+	void Event::setDateTimeEnd(const DateTime& dateTimeEnd)
 	{
-		m_endUTC = endUTC;
+		m_dateTimeEnd = dateTimeEnd;
 	}
 
 	void Event::setRecurrenceRule(const RecurrenceRule& recurrenceRule)
@@ -183,9 +187,9 @@ namespace icalendar
 		m_timeStamp = timeStamp;
 	}
 
-	void Event::setUid(const String& uid)
+	void Event::setUniqueID(const String& uniqueID)
 	{
-		m_uid = uid;
+		m_uniqueID = uniqueID;
 	}
 
 	void Event::setClass(const String& classValue)
@@ -228,14 +232,14 @@ namespace icalendar
 		return m_timeZoneName;
 	}
 
-	DateTime Event::getStart() const
+	DateTime Event::getDateTimeStart() const
 	{
-		return m_startUTC;
+		return m_dateTimeStart;
 	}
 
-	DateTime Event::getEnd() const
+	DateTime Event::getDateTimeEnd() const
 	{
-		return m_endUTC;
+		return m_dateTimeEnd;
 	}
 
 	Optional<RecurrenceRule> Event::getRecurrenceRule() const
@@ -263,9 +267,9 @@ namespace icalendar
 		return m_timeStamp;
 	}
 
-	Optional<String> Event::getUid() const
+	Optional<String> Event::getUniqueID() const
 	{
-		return m_uid;
+		return m_uniqueID;
 	}
 
 	Optional<String> Event::getClass() const

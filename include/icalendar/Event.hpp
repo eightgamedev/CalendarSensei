@@ -13,14 +13,14 @@ namespace icalendar
 		String toICalString() const;
 		void setIsAllDay(bool isAllDay);
 		void setTimeZoneName(const Optional<String>& timeZone);
-		void setStart(const DateTime& startUTC);
-		void setEnd(const DateTime& endUTC);
+		void setDateTimeStart(const DateTime& dateTimeStart);
+		void setDateTimeEnd(const DateTime& endUTC);
 		void setRecurrenceRule(const RecurrenceRule& recurrenceRule);
 		void setSummary(const String& summary);
 		void setDescription(const String& description);
 		void setLocation(const String& location);
 		void setTimeStamp(const DateTime& timeStamp);
-		void setUid(const String& uid);
+		void setUniqueID(const String& uniqueID);
 		void setClass(const String& classValue);
 		void setCreated(const DateTime& created);
 		void setLastModified(const DateTime& lastModified);
@@ -30,14 +30,14 @@ namespace icalendar
 
 		bool isAllDay() const;
 		Optional<String> getTimeZoneName() const;
-		DateTime getStart() const;
-		DateTime getEnd() const;
+		DateTime getDateTimeStart() const;
+		DateTime getDateTimeEnd() const;
 		Optional<RecurrenceRule> getRecurrenceRule() const;
 		String getSummary() const;
 		Optional<String> getDescription() const;
 		Optional<String> getLocation() const;
 		DateTime getTimeStamp() const;
-		Optional<String> getUid() const;
+		Optional<String> getUniqueID() const;
 		Optional<String> getClass() const;
 		Optional<DateTime> getCreated() const;
 		Optional<DateTime> getLastModified() const;
@@ -52,11 +52,11 @@ namespace icalendar
 
 		Optional<String> m_timeZoneName;
 
-		// イベントの開始日時
-		DateTime m_startUTC;
+		// イベントの開始日時 (UTC)
+		DateTime m_dateTimeStart;
 
-		// イベントの終了日時
-		DateTime m_endUTC;
+		// イベントの終了日時 (UTC)
+		DateTime m_dateTimeEnd;
 
 		// イベントの繰り返し規則
 		Optional<RecurrenceRule> m_recurrenceRule;
@@ -71,7 +71,7 @@ namespace icalendar
 		Optional<String> m_location;
 
 		// イベントのID
-		Optional<String> m_uid;
+		Optional<String> m_uniqueID;
 
 		Optional<String> m_class;
 
