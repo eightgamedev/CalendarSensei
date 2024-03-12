@@ -10,6 +10,11 @@ namespace icalendar::actions
 	{
 	}
 
+	std::unique_ptr<Action> ProcedureAction::clone() const
+	{
+		return std::make_unique<ProcedureAction>(*this);
+	}
+
 	void ProcedureAction::parseFromICS(const Array<String>& icsContent)
 	{
 		for (const String& line : icsContent)

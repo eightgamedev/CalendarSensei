@@ -10,6 +10,11 @@ namespace icalendar::actions
 	{
 	}
 
+	std::unique_ptr<Action> AudioAction::clone() const
+	{
+		return std::make_unique<AudioAction>(*this);
+	}
+
 	void AudioAction::parseFromICS(const Array<String>& icsContent)
 	{
 		for (const String& line : icsContent)

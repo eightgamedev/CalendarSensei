@@ -8,6 +8,7 @@ namespace icalendar::actions
 		public:
 		ProcedureAction();
 		~ProcedureAction();
+		virtual std::unique_ptr<Action> clone() const override;
 		void parseFromICS(const Array<String>& icsContent);
 		void setAttachment(const String& attachment);
 		String getAttachment() const;

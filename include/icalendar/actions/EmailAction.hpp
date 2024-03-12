@@ -8,6 +8,7 @@ namespace icalendar::actions
 	public:
 		EmailAction();
 		~EmailAction();
+		virtual std::unique_ptr<Action> clone() const override;
 		void parseFromICS(const Array<String>& icsContent);
 		void setDescription(const String& description);
 		void setSummary(const String& summary);

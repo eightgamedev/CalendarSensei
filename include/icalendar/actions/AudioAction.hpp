@@ -8,6 +8,7 @@ namespace icalendar::actions
 	public:
 		AudioAction();
 		~AudioAction();
+		virtual std::unique_ptr<Action> clone() const override;
 		void parseFromICS(const Array<String>& icsContent);
 		void setAttachment(const String& attachment);
 		Optional<String> getAttachment() const;

@@ -11,6 +11,18 @@ namespace icalendar::actions
 	{
 	}
 
+	std::unique_ptr<Action> EmailAction::clone() const
+	{
+		auto clone = std::make_unique<EmailAction>();
+		clone->setDuration(getDuration());
+		clone->setRepeat(getRepeat());
+		clone->setDescription(getDescription());
+		clone->setSummary(getSummary());
+		clone->setAttendee(getAttendee());
+		clone->setAttachment(getAttachment().value_or(U""));
+		return clone;
+	}
+
 	void EmailAction::parseFromICS(const Array<String>& icsContent)
 	{
 		HashTable<String, std::function<void(const String&)>> prefixHandlers = {

@@ -10,6 +10,11 @@ namespace icalendar::actions
 	{
 	}
 
+	std::unique_ptr<Action> DisplayAction::clone() const
+	{
+		return std::make_unique<DisplayAction>(*this);
+	}
+
 	void DisplayAction::parseFromICS(const Array<String>& icsContent)
 	{
 		HashTable<String, std::function<void(const String&)>> prefixHandlers = {

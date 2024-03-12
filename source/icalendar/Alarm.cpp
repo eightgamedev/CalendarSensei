@@ -10,33 +10,55 @@ namespace icalendar
 	{
 	}
 
-	void Alarm::parseFromICS(const Array<String>& icsContent)
+	Alarm::Alarm(const Alarm& other)
 	{
+		// Actionの具体的な型に基づいて適切なコピーを作成します。
+		m_action = other.m_action->clone();
+		m_description = other.m_description;
+		m_trigger = other.m_trigger;
+	}
+
+	Alarm& Alarm::operator=(const Alarm& other)
+	{
+		if (this != &other)
+		{
+			// Actionの具体的な型に基づいて適切なコピーを作成します。
+			m_action = other.m_action->clone();
+			m_description = other.m_description;
+			m_trigger = other.m_trigger;
+		}
+		return *this;
+	}
+
+	Alarm Alarm::parseFromICS(const Array<String>& icsContent)
+	{
+		Alarm alarm;
+
 		HashTable<String, std::function<void(const String&)>> prefixHandlers = {
 			{ U"ACTION", [&](const String& value) {
 				if (value == U"AUDIO")
 				{
-					setAction(std::make_unique<actions::AudioAction>());
+					alarm.setAction(std::make_unique<actions::AudioAction>());
 				}
 				else if (value == U"DISPLAY")
 				{
-					setAction(std::make_unique<actions::DisplayAction>());
+					alarm.setAction(std::make_unique<actions::DisplayAction>());
 				}
 				else if (value == U"EMAIL")
 				{
-					setAction(std::make_unique<actions::EmailAction>());
+					alarm.setAction(std::make_unique<actions::EmailAction>());
 				}
 				else if (value == U"PROCEDURE")
 				{
-					setAction(std::make_unique<actions::ProcedureAction>());
+					alarm.setAction(std::make_unique<actions::ProcedureAction>());
 				}
 			} },
 
 			{ U"DESCRIPTION", [&](const String& value) {
-				setDescription(value);
+				alarm.setDescription(value);
 			} },
 			{ U"TRIGGER", [&](const String& value) {
-				setTrigger(value);
+				alarm.setTrigger(value);
 			} },
 		};
 
@@ -50,6 +72,8 @@ namespace icalendar
 				prefixHandlers[prefix](value);
 			}
 		}
+
+		return alarm;
 	}
 
 	void Alarm::setAction(std::unique_ptr<actions::Action> action)

@@ -12,7 +12,9 @@ namespace icalendar
 	public:
 		Alarm();
 		~Alarm();
-		void parseFromICS(const Array<String>& icsContent);
+		Alarm(const Alarm& other);
+		Alarm& operator=(const Alarm& other);
+		static Alarm parseFromICS(const Array<String>& icsContent);
 		void setAction(std::unique_ptr<actions::Action> action);
 		void setDescription(const String& description);
 		void setTrigger(const String& trigger);

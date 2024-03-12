@@ -115,6 +115,25 @@ namespace icalendar
 				}
 			}
 		}
+
+		Array<String> alarmStrings; // BEGIN:VALARMからEND:VALARMまでの行を格納する配列
+
+		for (const String& line : iCalContent)
+		{
+			if (line.starts_with(U"BEGIN:VALARM"))
+			{
+				alarmStrings.clear();
+			}
+			else if (line.starts_with(U"END:VALARM"))
+			{
+				event.addAlarm(std::make_unique<Alarm>(Alarm::parseFromICS(alarmStrings)));
+			}
+			else
+			{
+				alarmStrings.emplace_back(line);
+			}
+		}
+
 		return event;
 	}
 
