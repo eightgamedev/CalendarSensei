@@ -26,6 +26,7 @@ namespace icalendar
 		void setLastModified(const DateTime& lastModified);
 		void setSequence(const String& sequence);
 		void setStatus(const String& status);
+		void setTransparent(const String& transparent);
 
 		bool isAllDay() const;
 		Optional<String> getTimeZoneName() const;
@@ -42,6 +43,7 @@ namespace icalendar
 		Optional<DateTime> getLastModified() const;
 		Optional<String> getSequence() const;
 		Optional<String> getStatus() const;
+		Optional<String> getTransparent() const;
 
 	private:
 		bool m_isAllDay;
@@ -81,6 +83,6 @@ namespace icalendar
 
 		Optional<String> m_status;
 
-		Optional<String> m_transp;
+		Optional<String> m_transparent;
 	};
 }

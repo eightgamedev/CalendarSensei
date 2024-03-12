@@ -213,6 +213,11 @@ namespace icalendar
 		m_status = status;
 	}
 
+	void Event::setTransparent(const String& transparent)
+	{
+		m_transparent = transparent;
+	}
+
 	bool Event::isAllDay() const
 	{
 		return m_isAllDay;
@@ -286,5 +291,10 @@ namespace icalendar
 	Optional<String> Event::getStatus() const
 	{
 		return m_status;
+	}
+
+	Optional<String> Event::getTransparent() const
+	{
+		return m_transparent;
 	}
 }
