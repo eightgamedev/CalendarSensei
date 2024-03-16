@@ -8,10 +8,10 @@ MainScene::MainScene(const InitData& init)
 
 	Grid<String> values(columnCount, rowCount);
 
-	m_spreadSheetGUI.setColumnNames({ U"Subject", U"Start Date", U"Start Time", U"End Date", U"End Time", U"All Day Event", U"Description", U"Location", U"Private" });
-	m_spreadSheetGUI.setValues(values);
-	m_spreadSheetGUI.setIndexFont(Font(10));
-	m_spreadSheetGUI.setTextFont(Font(10));
+	m_spreadSheet.setColumnNames({ U"Subject", U"Start Date", U"Start Time", U"End Date", U"End Time", U"All Day Event", U"Description", U"Location", U"Private" });
+	m_spreadSheet.setValues(values);
+	m_spreadSheet.setIndexFont(Font(10));
+	m_spreadSheet.setTextFont(Font(10));
 }
 
 void MainScene::update()
@@ -38,7 +38,7 @@ void MainScene::update()
 		{
 			m_icalendar.load(m_inputFilePath.value());
 			m_csv = convertICalToCSV(m_icalendar);
-			m_spreadSheetGUI.setValues(convertICalToGrid(m_icalendar));
+			m_spreadSheet.setValues(convertICalToGrid(m_icalendar));
 			m_inputFilePath.reset();
 			m_calendarPropertyNode = createCalendarPropertyNode(m_icalendar.getCalendarProperty());
 			m_eventNode = createEventNode(m_icalendar.getEvents().front());
@@ -47,7 +47,7 @@ void MainScene::update()
 
 	{
 		const Transformer2D t(Mat3x2::Scale(1.0).translated(0, 300), TransformCursor::Yes);
-		m_spreadSheetGUI.update();
+		m_spreadSheet.update();
 	}
 
 	{
@@ -72,7 +72,7 @@ void MainScene::draw() const
 {
 	{
 		const Transformer2D t(Mat3x2::Scale(1.0).translated(0, 300), TransformCursor::Yes);
-		m_spreadSheetGUI.draw();
+		m_spreadSheet.draw();
 	}
 
 	{

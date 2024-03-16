@@ -31,7 +31,7 @@ private:
 	size_t columnCount = 9;
 	size_t rowCount = 1000;
 
-	SimpleGridViewer::SpreadSheet m_spreadSheetGUI{
+	SimpleGridViewer::SpreadSheet m_spreadSheet{
 		{columnCount, rowCount },
 		{ 9, 30 },
 		{ 0, 0 }
