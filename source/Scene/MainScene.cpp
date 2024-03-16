@@ -38,6 +38,7 @@ void MainScene::update()
 			m_csv = convertICalToCSV(m_icalendar);
 			m_spreadSheetGUI.setValues(convertCSVToGrid(m_csv));
 			m_inputFilePath.reset();
+			m_calendarPropertyNode = createCalendarPropertyNode(m_icalendar.getCalendarProperty());
 			m_eventNodes.emplace_back(createEventNode(m_icalendar.getEvents().front()));
 		}
 	}
@@ -48,6 +49,15 @@ void MainScene::update()
 
 
 	}
+
+	{
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(1500, 50), TransformCursor::Yes);
+		if (m_calendarPropertyNode)
+		{
+			m_calendarPropertyNode->update({ 0, 0 });
+		}
+	}
+
 	{
 		const Transformer2D t(Mat3x2::Scale(1.0).translated(50, 300), TransformCursor::Yes);
 		for (auto& node : m_eventNodes)
@@ -67,7 +77,10 @@ void MainScene::draw() const
 
 	{
 		const Transformer2D t(Mat3x2::Scale(1.0).translated(1500, 50), TransformCursor::Yes);
-		drawCalendarProperty(m_icalendar);
+		if (m_calendarPropertyNode)
+		{
+			m_calendarPropertyNode->draw();
+		}
 	}
 
 	drawToolWindow();
@@ -264,6 +277,16 @@ Grid<String> MainScene::convertCSVToGrid(const CSV& csv) const
 	return grid;
 }
 
+std::shared_ptr<TreeGUI::Node> MainScene::createCalendarPropertyNode(const icalendar::CalendarProperty& calendarProperty) const
+{
+	std::shared_ptr<TreeGUI::Node> node = std::make_shared<TreeGUI::Node>(U"Calendar Property");
+	node->addChild(U"Version", U"Version: {}"_fmt(calendarProperty.getVersion()));
+	node->addChild(U"Product ID", U"Product ID: {}"_fmt(calendarProperty.getProdId()));
+	node->addChild(U"Scale", U"Scale: {}"_fmt(calendarProperty.getCalscale()));
+	node->addChild(U"Method", U"Method: {}"_fmt(calendarProperty.getMethod()));
+	return node;
+}
+
 std::shared_ptr<TreeGUI::Node> MainScene::createEventNode(const icalendar::Event& event) const
 {
 	std::shared_ptr<TreeGUI::Node> node = std::make_shared<TreeGUI::Node> (event.getSummary());
@@ -284,13 +307,14 @@ std::shared_ptr<TreeGUI::Node> MainScene::createEventNode(const icalendar::Event
 	node->addChild(U"Alarms", U"Alarms: ");
 	for (const auto& alarm : event.getAlarms())
 	{
-		auto& alarmNode = node->operator[](U"Alarm");
-		alarmNode->addChild(U"Action", U"Action: {}");
-		alarmNode->addChild(U"Trigger", U"Trigger: {}");
-		alarmNode->addChild(U"Description", U"Description: {}");
-		alarmNode->addChild(U"Repeat", U"Repeat: {}");
-		alarmNode->addChild(U"Duration", U"Duration: {}");
-		alarmNode->addChild(U"Attach", U"Attach: {}");
+		auto& alarmNode = node->operator[](U"Alarms");
+		alarmNode->addChild(U"Action", U"Action:")
+			->addChild(U"Duration", U"Duration: {}"_fmt(alarm->getAction()->getDuration()))->p(1)
+			->addChild(U"Repeat", U"Repeat: {}"_fmt(alarm->getAction()->getRepeat()));
+
+		alarmNode
+			->addChild(U"Trigger", U"Trigger: {}"_fmt(alarm->getTrigger()))->p(1)
+			->addChild(U"Description", U"Description: {}"_fmt(alarm->getDescription()));
 	}
 
 	return node;

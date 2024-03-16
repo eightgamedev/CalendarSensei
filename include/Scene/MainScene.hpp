@@ -20,6 +20,7 @@ private:
 	void drawCalendarProperty(const icalendar::ICalendar& icalendar) const;
 	CSV convertICalToCSV(const icalendar::ICalendar& icalendar) const;
 	Grid<String> convertCSVToGrid(const CSV& csv) const;
+	std::shared_ptr<TreeGUI::Node> createCalendarPropertyNode(const icalendar::CalendarProperty& calendarProperty) const;
 	std::shared_ptr<TreeGUI::Node> createEventNode(const icalendar::Event& event) const;
 
 	mutable Optional<FilePath> m_inputFilePath;
@@ -33,6 +34,7 @@ private:
 
 	mutable SasaGUI::GUIManager gui;
 	Array<std::shared_ptr<TreeGUI::Node>> m_eventNodes;
+	std::shared_ptr<TreeGUI::Node> m_calendarPropertyNode = nullptr;
 
 	enum class OpeningWindow
 	{
