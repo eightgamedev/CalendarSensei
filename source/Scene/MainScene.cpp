@@ -44,14 +44,14 @@ void MainScene::update()
 	}
 
 	{
-		const Transformer2D t(Mat3x2::Scale(0.85).translated(1000, 400), TransformCursor::Yes);
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(0, 300), TransformCursor::Yes);
 		m_spreadSheetGUI.update();
 
 
 	}
 
 	{
-		const Transformer2D t(Mat3x2::Scale(1.0).translated(1500, 50), TransformCursor::Yes);
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(1200, 50), TransformCursor::Yes);
 		if (m_calendarPropertyNode)
 		{
 			m_calendarPropertyNode->update({ 0, 0 });
@@ -59,7 +59,7 @@ void MainScene::update()
 	}
 
 	{
-		const Transformer2D t(Mat3x2::Scale(1.0).translated(50, 300), TransformCursor::Yes);
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(1200, 300), TransformCursor::Yes);
 		for (auto& node : m_eventNodes)
 		{
 			node->update({ 0, 0 });
@@ -71,12 +71,12 @@ void MainScene::update()
 void MainScene::draw() const
 {
 	{
-		const Transformer2D t(Mat3x2::Scale(0.85).translated(1000, 400), TransformCursor::Yes);
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(0, 300), TransformCursor::Yes);
 		m_spreadSheetGUI.draw();
 	}
 
 	{
-		const Transformer2D t(Mat3x2::Scale(1.0).translated(1500, 50), TransformCursor::Yes);
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(1200, 50), TransformCursor::Yes);
 		if (m_calendarPropertyNode)
 		{
 			m_calendarPropertyNode->draw();
@@ -88,7 +88,7 @@ void MainScene::draw() const
 	drawExportCSVWindow();
 
 	{
-		const Transformer2D t(Mat3x2::Scale(1.0).translated(50, 300), TransformCursor::Yes);
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(1200, 300), TransformCursor::Yes);
 		for (const auto& node : m_eventNodes)
 		{
 			node->draw();
