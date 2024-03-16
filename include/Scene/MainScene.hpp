@@ -5,6 +5,7 @@
 # include "icalendar/ICalendar.hpp"
 # include "s3dex/CSVEX.hpp"
 # include "SimpleGridViewer/SpreadSheet.hpp"
+# include "TreeGUI/Node.hpp"
 
 class MainScene : public App::Scene
 {
@@ -19,6 +20,7 @@ private:
 	void drawCalendarProperty(const icalendar::ICalendar& icalendar) const;
 	CSV convertICalToCSV(const icalendar::ICalendar& icalendar) const;
 	Grid<String> convertCSVToGrid(const CSV& csv) const;
+	std::shared_ptr<TreeGUI::Node> createEventNode(const icalendar::Event& event) const;
 
 	mutable Optional<FilePath> m_inputFilePath;
 	icalendar::ICalendar m_icalendar;
@@ -30,6 +32,7 @@ private:
 	SimpleGridViewer::SpreadSheet m_spreadSheetGUI{ {columnCount, rowCount }, { 26, 30 }, { 0, 0 } };
 
 	mutable SasaGUI::GUIManager gui;
+	Array<std::shared_ptr<TreeGUI::Node>> m_eventNodes;
 
 	enum class OpeningWindow
 	{

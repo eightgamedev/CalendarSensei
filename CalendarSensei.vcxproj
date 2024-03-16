@@ -151,6 +151,7 @@
     <ClCompile Include="source\Scene\SyukujitsuCSVToICal.cpp" />
     <ClCompile Include="source\Scene\TestScene.cpp" />
     <ClCompile Include="source\SimpleGridViewer\SpreadSheet.cpp" />
+    <ClCompile Include="source\TreeGUI\Node.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -382,6 +383,7 @@
     <ClInclude Include="include\Scene\SyukujitsuCSVToICal.hpp" />
     <ClInclude Include="include\Scene\TestScene.hpp" />
     <ClInclude Include="include\SimpleGridViewer\SpreadSheet.hpp" />
+    <ClInclude Include="include\TreeGUI\Node.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

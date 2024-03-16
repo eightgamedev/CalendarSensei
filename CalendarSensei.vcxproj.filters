@@ -184,6 +184,12 @@
     <Filter Include="Source Files\icalendar\actions">
       <UniqueIdentifier>{181fc98e-1978-4a12-89e2-efbf86974b2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\TreeGUI">
+      <UniqueIdentifier>{ecfd3105-eea3-4562-84c5-0a0b25e0a342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TreeGYU">
+      <UniqueIdentifier>{0ba48c58-3dd9-41fb-82aa-ad5291f30ff8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -257,6 +263,9 @@
     </ClCompile>
     <ClCompile Include="source\icalendar\Alarm.cpp">
       <Filter>Source Files\icalendar</Filter>
+    </ClCompile>
+    <ClCompile Include="source\TreeGUI\Node.cpp">
+      <Filter>Source Files\TreeGYU</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -988,6 +997,9 @@
     </ClInclude>
     <ClInclude Include="include\icalendar\Alarm.hpp">
       <Filter>Header Files\icalendar</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TreeGUI\Node.hpp">
+      <Filter>Header Files\TreeGUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

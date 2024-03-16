@@ -38,13 +38,24 @@ void MainScene::update()
 			m_csv = convertICalToCSV(m_icalendar);
 			m_spreadSheetGUI.setValues(convertCSVToGrid(m_csv));
 			m_inputFilePath.reset();
+			m_eventNodes.emplace_back(createEventNode(m_icalendar.getEvents().front()));
 		}
 	}
 
 	{
 		const Transformer2D t(Mat3x2::Scale(0.85).translated(0, 400), TransformCursor::Yes);
 		m_spreadSheetGUI.update();
+
+
 	}
+	{
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(700, 200), TransformCursor::Yes);
+		for (auto& node : m_eventNodes)
+		{
+			node->update({ 0, 0 });
+		}
+	}
+
 }
 
 void MainScene::draw() const
@@ -62,6 +73,14 @@ void MainScene::draw() const
 	drawToolWindow();
 	drawImportICalWindow();
 	drawExportCSVWindow();
+
+	{
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(700, 200), TransformCursor::Yes);
+		for (const auto& node : m_eventNodes)
+		{
+			node->draw();
+		}
+	}
 }
 
 void MainScene::drawToolWindow() const
@@ -243,4 +262,26 @@ Grid<String> MainScene::convertCSVToGrid(const CSV& csv) const
 		}
 	}
 	return grid;
+}
+
+std::shared_ptr<TreeGUI::Node> MainScene::createEventNode(const icalendar::Event& event) const
+{
+	std::shared_ptr<TreeGUI::Node> node = std::make_shared<TreeGUI::Node> (event.getSummary());
+	node->addChild(U"StartDateTime", U"Start DateTime: "_fmt(event.getDateTimeStart().format(U"yyyy/MM/dd HH:mm")));
+	node->addChild(U"EndDateTime", U"End DateTime: "_fmt(event.getDateTimeEnd().format(U"yyyy/MM/dd HH:mm")));
+	node->addChild(U"AllDayEvent", U"All Day Event: {}"_fmt(event.isAllDay() ? U"true" : U"false"));
+	node->addChild(U"Description", U"Description: {}"_fmt(event.getDescription().value_or(U"null")));
+	node->addChild(U"Location", U"Location: {}"_fmt(event.getLocation().value_or(U"null")));
+	node->addChild(U"TimeStamp", U"TimeStamp: {}"_fmt(event.getTimeStamp().format(U"yyyy/MM/dd HH:mm")));
+	node->addChild(U"UniqueID", U"UniqueID: {}"_fmt(event.getUniqueID().value_or(U"")));
+	node->addChild(U"CreatedDateTime", U"Created DateTime: {}"_fmt(event.getCreated().has_value() ? event.getCreated().value().format(U"yyyy/MM/dd HH:mm") : U""));
+	node->addChild(U"Last Modified DateTime: {}"_fmt(event.getLastModified().has_value() ? event.getLastModified().value().format(U"yyyy/MM/dd HH:mm") : U""));
+	node->addChild(U"Sequence: {}"_fmt(event.getSequence().value_or(U"null")));
+	node->addChild(U"Status: {}"_fmt(event.getStatus().value_or(U"null")));
+	node->addChild(U"Transparency: {}"_fmt(event.getTransparent().value_or(U"null")));
+	node->addChild(U"Class: {}"_fmt(event.getClass().value_or(U"null")));
+
+	node->addChild(U"Alarm: ");
+
+	return node;
 }
