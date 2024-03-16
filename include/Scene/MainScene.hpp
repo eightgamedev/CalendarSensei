@@ -27,10 +27,14 @@ private:
 	icalendar::ICalendar m_icalendar;
 	CSV m_csv;
 	Font m_font{ 24 };
-	size_t columnCount = 100;
-	size_t rowCount = 100;
+	size_t columnCount = 9;
+	size_t rowCount = 1000;
 
-	SimpleGridViewer::SpreadSheet m_spreadSheetGUI{ {columnCount, rowCount }, { 13, 30 }, { 0, 0 } };
+	SimpleGridViewer::SpreadSheet m_spreadSheetGUI{
+		{columnCount, rowCount },
+		{ 9, 30 },
+		{ 0, 0 }
+	};
 
 	mutable SasaGUI::GUIManager gui;
 	Array<std::shared_ptr<TreeGUI::Node>> m_eventNodes;

@@ -23,7 +23,7 @@ namespace SimpleGridViewer
 		struct Cell
 		{
 			inline constexpr static int32 Height = 20;
-			inline constexpr static int32 Width = 80;
+			inline constexpr static int32 Width = 100;
 			inline constexpr static ColorF BackgroundColor = Palette::White;
 			inline constexpr static ColorF HoverColor{ 0.9, 0.9, 0.9, 0.5 };
 			inline constexpr static ColorF TextColor = Palette::Black;
@@ -50,6 +50,8 @@ namespace SimpleGridViewer
 			void setValues(const Grid<String>& values);
 			Optional<String> getValue(size_t row, size_t column) const;
 			void setTextFont(const Font& font);
+			void setColumnNames(const Array<String>& columnNames);
+			void setRowNames(const Array<String>& rowNames);
 			SizeF getAreaSize() const noexcept;
 			void update();
 			void draw() const;

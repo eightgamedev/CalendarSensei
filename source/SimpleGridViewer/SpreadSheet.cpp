@@ -43,7 +43,7 @@ namespace SimpleGridViewer
 		m_lastVisibleColumn = getVisibleColumnCount() - 1;
 	}
 
-	constexpr size_t DEFAULT_FONT_SIZE = 20;
+	constexpr size_t DEFAULT_FONT_SIZE = 12;
 
 	SpreadSheet::SpreadSheet(const Size& sheetSize, const Size& visibleCellSize, const Point& viewPoint)
 		: m_indexFont(DEFAULT_FONT_SIZE)
@@ -96,6 +96,16 @@ namespace SimpleGridViewer
 	void SpreadSheet::setTextFont(const Font& font)
 	{
 		m_textFont = font;
+	}
+
+	void SpreadSheet::setColumnNames(const Array<String>& columnNames)
+	{
+		m_columnNames = columnNames;
+	}
+
+	void SpreadSheet::setRowNames(const Array<String>& rowNames)
+	{
+		m_rowNames = rowNames;
 	}
 
 	void SpreadSheet::update()

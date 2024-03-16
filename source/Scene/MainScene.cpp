@@ -8,6 +8,7 @@ MainScene::MainScene(const InitData& init)
 
 	Grid<String> values(columnCount, rowCount);
 
+	m_spreadSheetGUI.setColumnNames({ U"Subject", U"Start Date", U"Start Time", U"End Date", U"End Time", U"All Day Event", U"Description", U"Location", U"Private" });
 	m_spreadSheetGUI.setValues(values);
 	m_spreadSheetGUI.setTextFont(Font(10));
 }
@@ -236,10 +237,6 @@ CSV MainScene::convertICalToCSV(const icalendar::ICalendar& icalendar) const
 		U"End Date",
 		U"End Time",
 		U"All Day Event",
-		U"Reminder On/Off",
-		U"Reminder Date",
-		U"Reminder Time",
-		U"Meeting Organizer",
 		U"Description",
 		U"Location",
 		U"Private");
@@ -252,10 +249,6 @@ CSV MainScene::convertICalToCSV(const icalendar::ICalendar& icalendar) const
 			event.getDateTimeEnd().format(U"yyyy/MM/dd"),
 			event.isAllDay() ? U"" : event.getDateTimeEnd().format(U"HH:mm"),
 			event.isAllDay() ? U"True" : U"False",
-			U"False",
-			U"",
-			U"",
-			U"",
 			event.getDescription().has_value() ? event.getDescription().value() : U"",
 			event.getLocation().has_value() ? event.getLocation().value() : U"",
 			U"False"
