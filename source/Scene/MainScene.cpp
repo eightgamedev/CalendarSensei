@@ -43,13 +43,13 @@ void MainScene::update()
 	}
 
 	{
-		const Transformer2D t(Mat3x2::Scale(0.85).translated(0, 400), TransformCursor::Yes);
+		const Transformer2D t(Mat3x2::Scale(0.85).translated(1000, 400), TransformCursor::Yes);
 		m_spreadSheetGUI.update();
 
 
 	}
 	{
-		const Transformer2D t(Mat3x2::Scale(1.0).translated(700, 200), TransformCursor::Yes);
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(50, 300), TransformCursor::Yes);
 		for (auto& node : m_eventNodes)
 		{
 			node->update({ 0, 0 });
@@ -61,7 +61,7 @@ void MainScene::update()
 void MainScene::draw() const
 {
 	{
-		const Transformer2D t(Mat3x2::Scale(0.85).translated(0, 400), TransformCursor::Yes);
+		const Transformer2D t(Mat3x2::Scale(0.85).translated(1000, 400), TransformCursor::Yes);
 		m_spreadSheetGUI.draw();
 	}
 
@@ -75,7 +75,7 @@ void MainScene::draw() const
 	drawExportCSVWindow();
 
 	{
-		const Transformer2D t(Mat3x2::Scale(1.0).translated(700, 200), TransformCursor::Yes);
+		const Transformer2D t(Mat3x2::Scale(1.0).translated(50, 300), TransformCursor::Yes);
 		for (const auto& node : m_eventNodes)
 		{
 			node->draw();

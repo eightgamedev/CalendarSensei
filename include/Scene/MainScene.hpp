@@ -29,7 +29,7 @@ private:
 	size_t columnCount = 100;
 	size_t rowCount = 100;
 
-	SimpleGridViewer::SpreadSheet m_spreadSheetGUI{ {columnCount, rowCount }, { 26, 30 }, { 0, 0 } };
+	SimpleGridViewer::SpreadSheet m_spreadSheetGUI{ {columnCount, rowCount }, { 13, 30 }, { 0, 0 } };
 
 	mutable SasaGUI::GUIManager gui;
 	Array<std::shared_ptr<TreeGUI::Node>> m_eventNodes;
