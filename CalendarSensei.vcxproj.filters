@@ -187,7 +187,7 @@
     <Filter Include="Header Files\TreeGUI">
       <UniqueIdentifier>{ecfd3105-eea3-4562-84c5-0a0b25e0a342}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\TreeGYU">
+    <Filter Include="Source Files\TreeGUI">
       <UniqueIdentifier>{0ba48c58-3dd9-41fb-82aa-ad5291f30ff8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -265,7 +265,7 @@
       <Filter>Source Files\icalendar</Filter>
     </ClCompile>
     <ClCompile Include="source\TreeGUI\Node.cpp">
-      <Filter>Source Files\TreeGYU</Filter>
+      <Filter>Source Files\TreeGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

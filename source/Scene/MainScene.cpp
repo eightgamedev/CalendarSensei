@@ -267,8 +267,8 @@ Grid<String> MainScene::convertCSVToGrid(const CSV& csv) const
 std::shared_ptr<TreeGUI::Node> MainScene::createEventNode(const icalendar::Event& event) const
 {
 	std::shared_ptr<TreeGUI::Node> node = std::make_shared<TreeGUI::Node> (event.getSummary());
-	node->addChild(U"StartDateTime", U"Start DateTime: "_fmt(event.getDateTimeStart().format(U"yyyy/MM/dd HH:mm")));
-	node->addChild(U"EndDateTime", U"End DateTime: "_fmt(event.getDateTimeEnd().format(U"yyyy/MM/dd HH:mm")));
+	node->addChild(U"StartDateTime", U"Start DateTime: {}"_fmt(event.getDateTimeStart().format(U"yyyy/MM/dd HH:mm")));
+	node->addChild(U"EndDateTime", U"End DateTime: {}"_fmt(event.getDateTimeEnd().format(U"yyyy/MM/dd HH:mm")));
 	node->addChild(U"AllDayEvent", U"All Day Event: {}"_fmt(event.isAllDay() ? U"true" : U"false"));
 	node->addChild(U"Description", U"Description: {}"_fmt(event.getDescription().value_or(U"null")));
 	node->addChild(U"Location", U"Location: {}"_fmt(event.getLocation().value_or(U"null")));
@@ -281,7 +281,17 @@ std::shared_ptr<TreeGUI::Node> MainScene::createEventNode(const icalendar::Event
 	node->addChild(U"Transparency: {}"_fmt(event.getTransparent().value_or(U"null")));
 	node->addChild(U"Class: {}"_fmt(event.getClass().value_or(U"null")));
 
-	node->addChild(U"Alarm: ");
+	node->addChild(U"Alarms", U"Alarms: ");
+	for (const auto& alarm : event.getAlarms())
+	{
+		auto& alarmNode = node->operator[](U"Alarm");
+		alarmNode->addChild(U"Action", U"Action: {}");
+		alarmNode->addChild(U"Trigger", U"Trigger: {}");
+		alarmNode->addChild(U"Description", U"Description: {}");
+		alarmNode->addChild(U"Repeat", U"Repeat: {}");
+		alarmNode->addChild(U"Duration", U"Duration: {}");
+		alarmNode->addChild(U"Attach", U"Attach: {}");
+	}
 
 	return node;
 }
