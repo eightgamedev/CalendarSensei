@@ -40,15 +40,13 @@ void MainScene::update()
 			m_spreadSheetGUI.setValues(convertICalToGrid(m_icalendar));
 			m_inputFilePath.reset();
 			m_calendarPropertyNode = createCalendarPropertyNode(m_icalendar.getCalendarProperty());
-			m_eventNodes.emplace_back(createEventNode(m_icalendar.getEvents().front()));
+			m_eventNode = createEventNode(m_icalendar.getEvents().front());
 		}
 	}
 
 	{
 		const Transformer2D t(Mat3x2::Scale(1.0).translated(0, 300), TransformCursor::Yes);
 		m_spreadSheetGUI.update();
-
-
 	}
 
 	{
@@ -61,9 +59,9 @@ void MainScene::update()
 
 	{
 		const Transformer2D t(Mat3x2::Scale(1.0).translated(1200, 300), TransformCursor::Yes);
-		for (auto& node : m_eventNodes)
+		if (m_eventNode)
 		{
-			node->update({ 0, 0 });
+			m_eventNode->update({ 0, 0 });
 		}
 	}
 
@@ -90,9 +88,9 @@ void MainScene::draw() const
 
 	{
 		const Transformer2D t(Mat3x2::Scale(1.0).translated(1200, 300), TransformCursor::Yes);
-		for (const auto& node : m_eventNodes)
+		if (m_eventNode)
 		{
-			node->draw();
+			m_eventNode->draw();
 		}
 	}
 }

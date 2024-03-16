@@ -38,7 +38,7 @@ private:
 	};
 
 	mutable SasaGUI::GUIManager gui;
-	Array<std::shared_ptr<TreeGUI::Node>> m_eventNodes;
+	std::shared_ptr<TreeGUI::Node> m_eventNode = nullptr;
 	std::shared_ptr<TreeGUI::Node> m_calendarPropertyNode = nullptr;
 
 	enum class OpeningWindow
