@@ -43,11 +43,9 @@ namespace SimpleGridViewer
 		m_lastVisibleColumn = getVisibleColumnCount() - 1;
 	}
 
-	constexpr size_t DEFAULT_FONT_SIZE = 20;
-
 	SpreadSheet::SpreadSheet(const Size& sheetSize, const Size& visibleCellSize, const Point& viewPoint)
-		: m_indexFont(DEFAULT_FONT_SIZE)
-		, m_textFont(DEFAULT_FONT_SIZE)
+		: m_indexFont(Config::Font::IndexSize)
+		, m_textFont(Config::Font::TextSize)
 	{
 		initialize(sheetSize, visibleCellSize, viewPoint);
 
@@ -82,6 +80,11 @@ namespace SimpleGridViewer
 			return none;
 		}
 		return m_values[row][column];
+	}
+
+	void SpreadSheet::setIndexFont(const Font& font)
+	{
+		m_indexFont = font;
 	}
 
 	void SpreadSheet::setTextFont(const Font& font)
@@ -287,7 +290,7 @@ namespace SimpleGridViewer
 			}
 		}
 	}
-	
+
 	size_t SpreadSheet::getVisibleRowCount() const
 	{
 		size_t count = 0;
@@ -332,7 +335,7 @@ namespace SimpleGridViewer
 	{
 		for (size_t column = m_firstVisibleColumn; column <= m_lastVisibleColumn; ++column)
 		{
-			Rect rect = Rect{ m_cellGrid.getCellX(column), 0, m_columnWidths[column], Config::SheetHeader::Height};
+			Rect rect = Rect{ m_cellGrid.getCellX(column), 0, m_columnWidths[column], Config::SheetHeader::Height };
 			if ((rect.x + rect.w) < m_horizontalScrollBar.value()
 			  || rect.x > (m_horizontalScrollBar.value() + m_sheetArea.w))
 			{
@@ -405,7 +408,7 @@ namespace SimpleGridViewer
 			const Rect rect = m_cellGrid.getCellRect(m_hoveredCell->x, m_hoveredCell->y);
 			rect.stretched(-1, 0, 0, -1).draw(Config::Cell::HoveredColor);
 		}
-		
+
 		if (m_selectedCell.has_value() && isCellVisible(m_selectedCell->y, m_selectedCell->x))
 		{
 			const Rect rect = m_cellGrid.getCellRect(m_selectedCell->x, m_selectedCell->y);
@@ -418,7 +421,7 @@ namespace SimpleGridViewer
 		if (m_selectedRow.has_value() && m_selectedRow.value() < m_cellGrid.getRowCount())
 		{
 			const size_t row = m_selectedRow.value();
-			const Rect rect = Rect{ 0, m_cellGrid.getCellY(row), m_sheetArea.asRect().w, m_rowHeights[row]};
+			const Rect rect = Rect{ 0, m_cellGrid.getCellY(row), m_sheetArea.asRect().w, m_rowHeights[row] };
 			rect.drawFrame(1, 0, Config::SheetRow::SelectedColor);
 		}
 	}
@@ -428,7 +431,7 @@ namespace SimpleGridViewer
 		if (m_selectedColumn.has_value() && m_selectedColumn.value() < m_cellGrid.getColumnCount())
 		{
 			size_t column = m_selectedColumn.value();
-			const Rect rect = Rect{ m_cellGrid.getCellX(column), 0, m_columnWidths[column], m_sheetArea.asRect().h};
+			const Rect rect = Rect{ m_cellGrid.getCellX(column), 0, m_columnWidths[column], m_sheetArea.asRect().h };
 			rect.drawFrame(1, 0, Config::SheetHeader::SelectedColor);
 		}
 	}
@@ -457,5 +460,4 @@ namespace SimpleGridViewer
 		}
 	}
 }
-
 

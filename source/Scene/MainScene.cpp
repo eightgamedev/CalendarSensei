@@ -10,6 +10,7 @@ MainScene::MainScene(const InitData& init)
 
 	m_spreadSheetGUI.setColumnNames({ U"Subject", U"Start Date", U"Start Time", U"End Date", U"End Time", U"All Day Event", U"Description", U"Location", U"Private" });
 	m_spreadSheetGUI.setValues(values);
+	m_spreadSheetGUI.setIndexFont(Font(10));
 	m_spreadSheetGUI.setTextFont(Font(10));
 }
 

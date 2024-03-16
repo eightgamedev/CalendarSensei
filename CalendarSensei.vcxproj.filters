@@ -219,9 +219,6 @@
     <ClCompile Include="source\SasaGUI\SasaGUI.cpp">
       <Filter>Source Files\SasaGUI</Filter>
     </ClCompile>
-    <ClCompile Include="source\SimpleGridViewer\SpreadSheet.cpp">
-      <Filter>Source Files\SimpleGridViewer</Filter>
-    </ClCompile>
     <ClCompile Include="source\Scene\SyukujitsuCSVToICal.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
@@ -266,6 +263,9 @@
     </ClCompile>
     <ClCompile Include="source\TreeGUI\Node.cpp">
       <Filter>Source Files\TreeGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="source\SimpleGridViewer\SpreadSheet.cpp">
+      <Filter>Source Files\SimpleGridViewer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -956,9 +956,6 @@
     <ClInclude Include="include\gridcell\GuiGridAxis.hpp">
       <Filter>Header Files\gridcell</Filter>
     </ClInclude>
-    <ClInclude Include="include\SimpleGridViewer\SpreadSheet.hpp">
-      <Filter>Header Files\SimpleGridViewer</Filter>
-    </ClInclude>
     <ClInclude Include="include\icalendar\CalendarProperty.hpp">
       <Filter>Header Files\icalendar</Filter>
     </ClInclude>
@@ -1000,6 +997,9 @@
     </ClInclude>
     <ClInclude Include="include\TreeGUI\Node.hpp">
       <Filter>Header Files\TreeGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SimpleGridViewer\SpreadSheet.hpp">
+      <Filter>Header Files\SimpleGridViewer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
