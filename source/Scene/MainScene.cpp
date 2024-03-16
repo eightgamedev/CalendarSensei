@@ -37,7 +37,7 @@ void MainScene::update()
 		{
 			m_icalendar.load(m_inputFilePath.value());
 			m_csv = convertICalToCSV(m_icalendar);
-			m_spreadSheetGUI.setValues(convertCSVToGrid(m_csv));
+			m_spreadSheetGUI.setValues(convertICalToGrid(m_icalendar));
 			m_inputFilePath.reset();
 			m_calendarPropertyNode = createCalendarPropertyNode(m_icalendar.getCalendarProperty());
 			m_eventNodes.emplace_back(createEventNode(m_icalendar.getEvents().front()));
@@ -251,7 +251,7 @@ CSV MainScene::convertICalToCSV(const icalendar::ICalendar& icalendar) const
 			event.isAllDay() ? U"True" : U"False",
 			event.getDescription().has_value() ? event.getDescription().value() : U"",
 			event.getLocation().has_value() ? event.getLocation().value() : U"",
-			U"False"
+			event.getClass().value_or(U"True")
 		);
 	}
 	return csv;
@@ -266,6 +266,27 @@ Grid<String> MainScene::convertCSVToGrid(const CSV& csv) const
 		{
 			grid[row][column] = csv.get(row, column);
 		}
+	}
+	return grid;
+}
+
+Grid<String> MainScene::convertICalToGrid(const icalendar::ICalendar& icalendar) const
+{
+	Grid<String> grid{ 9, icalendar.getEvents().size() };
+
+	size_t row = 0;
+	for (const auto& event : icalendar.getEvents())
+	{
+		grid[row][0] = event.getSummary();
+		grid[row][1] = event.getDateTimeStart().format(U"yyyy/MM/dd");
+		grid[row][2] = event.isAllDay() ? U"" : event.getDateTimeStart().format(U"HH:mm");
+		grid[row][3] = event.getDateTimeEnd().format(U"yyyy/MM/dd");
+		grid[row][4] = event.isAllDay() ? U"" : event.getDateTimeEnd().format(U"HH:mm");
+		grid[row][5] = event.isAllDay() ? U"True" : U"False";
+		grid[row][6] = event.getDescription().has_value() ? event.getDescription().value() : U"";
+		grid[row][7] = event.getLocation().has_value() ? event.getLocation().value() : U"";
+		grid[row][8] = event.getClass().value_or(U"");
+		++row;
 	}
 	return grid;
 }
